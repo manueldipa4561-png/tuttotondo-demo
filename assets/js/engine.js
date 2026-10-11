@@ -155,11 +155,11 @@ export function toICS({ code, bookings }) {
   const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
   return [
     "BEGIN:VCALENDAR", "VERSION:2.0", `PRODID:-//${PROPERTY.name} Pescara//Demo//IT`,
-    "BEGIN:VEVENT", `UID:${code}@fabri171-demo`, `DTSTAMP:${stamp}`,
+    "BEGIN:VEVENT", `UID:${code}@tuttotondo-demo`, `DTSTAMP:${stamp}`,
     `DTSTART;VALUE=DATE:${d(b.checkIn)}`, `DTEND;VALUE=DATE:${d(b.checkOut)}`,
     `SUMMARY:${PROPERTY.name} — ${names}`,
     `LOCATION:${PROPERTY.address.replace(",", "\\,")}\\, ${PROPERTY.city}`,
-    `DESCRIPTION:Codice ${code}. Check-in ${PROPERTY.checkInFrom}–${PROPERTY.checkInTo}.`,
+    `DESCRIPTION:Codice ${code}. Check-in autonomo ${PROPERTY.checkInFrom}–${PROPERTY.checkInTo}.`,
     "END:VEVENT", "END:VCALENDAR",
   ].join("\r\n");
 }

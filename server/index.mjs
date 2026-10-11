@@ -5,7 +5,7 @@ import { createApp } from "./app.mjs";
 const TICK_MS = 15_000; // send due WhatsApp messages
 const SYNC_MS = 30_000; // read channel calendars (a real channel manager would poll every few minutes)
 const PULL_MS = 180_000; // the mock Booking.com reads our calendar (the real one takes hours)
-const DEFAULT_PORT = 4171;
+const DEFAULT_PORT = 4129;
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 try {
@@ -28,5 +28,5 @@ const stop = () => app.close().then(() => process.exit(0));
 process.on("SIGINT", stop);
 process.on("SIGTERM", stop);
 
-console.log(`Fabrì 171 demo  http://localhost:${port}/`);
+console.log(`Tuttotondo demo  http://localhost:${port}/`);
 console.log(`Host console    http://localhost:${port}/gestione.html`);

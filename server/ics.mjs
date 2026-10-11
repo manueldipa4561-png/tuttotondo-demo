@@ -8,7 +8,7 @@ const stampOf = (date) => date.toISOString().replace(/[-:]/g, "").slice(0, 15) +
 
 // events: [{ uid, start: "YYYY-MM-DD", end: "YYYY-MM-DD" (checkout day), summary }]
 export function buildFeed({ name, events, stamp = new Date() }) {
-  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Fabri171 demo//direct booking//EN", "CALSCALE:GREGORIAN", `X-WR-CALNAME:${escapeText(name)}`];
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Tuttotondo demo//direct booking//EN", "CALSCALE:GREGORIAN", `X-WR-CALNAME:${escapeText(name)}`];
   for (const e of events) {
     lines.push(
       "BEGIN:VEVENT", `UID:${e.uid}`, `DTSTAMP:${stampOf(stamp)}`,

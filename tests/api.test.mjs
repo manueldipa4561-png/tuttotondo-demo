@@ -20,7 +20,7 @@ let base;
 let port;
 
 before(async () => {
-  app = await createApp({ rootDir: ROOT, dataDir: await mkdtemp(join(tmpdir(), "fbr-api-")), env: {}, now: () => NOW });
+  app = await createApp({ rootDir: ROOT, dataDir: await mkdtemp(join(tmpdir(), "ttd-api-")), env: {}, now: () => NOW });
   port = await app.listen(0);
   base = `http://127.0.0.1:${port}`;
   await app.pull();
@@ -71,7 +71,7 @@ test("a direct booking is stored, blocks the dates and queues the WhatsApp journ
   const res = await post("/api/bookings", bookingInput(slot));
   assert.equal(res.status, 201);
   const { code, bookings, total } = await res.json();
-  assert.match(code, /^FBR-[A-Z0-9]{4}$/);
+  assert.match(code, /^TTD-[A-Z0-9]{4}$/);
   assert.equal(bookings[0].channel, "Sito web");
   assert.ok(total > 0);
   const { bookings: after } = await availability();
@@ -109,8 +109,8 @@ test("the calendar feed we give to Booking.com lists our stays, without names an
   const feed = await (await fetch(`${base}/ical/${mine.roomId}.ics?exclude=Booking.com`)).text();
   assert.match(feed, new RegExp(`DTSTART;VALUE=DATE:${mine.checkIn.replaceAll("-", "")}`));
   assert.doesNotMatch(feed, /Rossi|mario@/);
-  const all = await (await fetch(`${base}/ical/economy.ics`)).text();
-  const without = await (await fetch(`${base}/ical/economy.ics?exclude=Booking.com`)).text();
+  const all = await (await fetch(`${base}/ical/bath.ics`)).text();
+  const without = await (await fetch(`${base}/ical/bath.ics?exclude=Booking.com`)).text();
   assert.ok(all.split("BEGIN:VEVENT").length > without.split("BEGIN:VEVENT").length);
   assert.equal((await fetch(`${base}/ical/suite.ics`)).status, 404);
 });
@@ -179,7 +179,7 @@ test("only the site's own pages and assets are served", async () => {
 });
 
 test("remote mode refuses to start without an admin token and then protects the console", async () => {
-  const dataDir = await mkdtemp(join(tmpdir(), "fbr-remote-"));
+  const dataDir = await mkdtemp(join(tmpdir(), "ttd-remote-"));
   await assert.rejects(createApp({ rootDir: ROOT, dataDir, env: { ALLOW_REMOTE: "1" }, now: () => NOW }), /ADMIN_TOKEN/);
   const remote = await createApp({ rootDir: ROOT, dataDir, env: { ALLOW_REMOTE: "1", ADMIN_TOKEN: "s3cret-token" }, now: () => NOW });
   const remotePort = await remote.listen(0);

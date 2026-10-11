@@ -8,8 +8,8 @@ import {
 } from "../assets/js/engine.js";
 
 const guest = { firstName: "Mario", lastName: "Rossi", email: "mario@example.com", phone: "+39 333 1234567" };
-const base = { roomIds: ["economy"], checkIn: "2027-03-10", checkOut: "2027-03-12", adults: 2, guest };
-const existing = [{ roomId: "economy", checkIn: "2027-03-10", checkOut: "2027-03-12", status: "confermata" }];
+const base = { roomIds: ["bath"], checkIn: "2027-03-10", checkOut: "2027-03-12", adults: 2, guest };
+const existing = [{ roomId: "bath", checkIn: "2027-03-10", checkOut: "2027-03-12", status: "confermata" }];
 const check = (input, bookings = []) => validateBooking(input, { bookings, today: "2027-01-01" });
 
 test("date arithmetic survives the daylight-saving switch", () => {
@@ -31,36 +31,38 @@ test("today is the property's day (Rome), not UTC's", () => {
 });
 
 test("check-out day can be the next guest's check-in", () => {
-  assert.equal(isRoomFree("economy", "2027-03-12", "2027-03-14", existing), true);
-  assert.equal(isRoomFree("economy", "2027-03-08", "2027-03-10", existing), true);
-  assert.equal(isRoomFree("economy", "2027-03-11", "2027-03-13", existing), false);
-  assert.equal(isRoomFree("economy", "2027-03-01", "2027-03-20", existing), false);
+  assert.equal(isRoomFree("bath", "2027-03-12", "2027-03-14", existing), true);
+  assert.equal(isRoomFree("bath", "2027-03-08", "2027-03-10", existing), true);
+  assert.equal(isRoomFree("bath", "2027-03-11", "2027-03-13", existing), false);
+  assert.equal(isRoomFree("bath", "2027-03-01", "2027-03-20", existing), false);
   assert.equal(isRoomFree("triple", "2027-03-11", "2027-03-13", existing), true);
 });
 
 test("cancelled bookings free the room and its nights", () => {
   const cancelled = [{ ...existing[0], status: "annullata" }];
-  assert.equal(isRoomFree("economy", "2027-03-11", "2027-03-13", cancelled), true);
-  assert.equal(bookedNights("economy", cancelled).size, 0);
-  assert.deepEqual(freeRooms("2027-03-10", "2027-03-12", existing).map((r) => r.id), ["triple", "quad"]);
+  assert.equal(isRoomFree("bath", "2027-03-11", "2027-03-13", cancelled), true);
+  assert.equal(bookedNights("bath", cancelled).size, 0);
+  assert.deepEqual(freeRooms("2027-03-10", "2027-03-12", existing).map((r) => r.id), ["double", "large", "standard", "triple"]);
 });
 
 test("rooms have different sizes, so capacity is counted in seats", () => {
-  assert.equal(MAX_GUESTS, 9);
-  assert.equal(seats(["economy", "quad"]), 6);
+  assert.equal(MAX_GUESTS, 11); // four doubles and one triple
+  assert.equal(seats(["bath", "triple"]), 5);
   assert.equal(roomsNeeded({ adults: 1 }), 1);
-  assert.equal(roomsNeeded({ adults: 4 }), 1);
+  assert.equal(roomsNeeded({ adults: 3 }), 1); // the triple
+  assert.equal(roomsNeeded({ adults: 4 }), 2);
   assert.equal(roomsNeeded({ adults: 3, children: 2 }), 2);
-  assert.equal(roomsNeeded({ adults: 9 }), 3);
+  assert.equal(roomsNeeded({ adults: 9 }), 4);
+  assert.equal(roomsNeeded({ adults: MAX_GUESTS }), ROOMS.length);
 });
 
 test("quote: direct price against the portal price", () => {
-  const q = quote(roomById("economy"), "2027-03-01", "2027-03-04");
+  const q = quote(roomById("bath"), "2027-03-01", "2027-03-04");
   assert.equal(q.nights, 3);
-  assert.equal(q.total, 3 * roomById("economy").rate);
+  assert.equal(q.total, 3 * roomById("bath").rate);
   assert.ok(q.portal > q.total && q.saving === q.portal - q.total);
-  const both = quoteRooms(["economy", "quad"], "2027-03-01", "2027-03-02");
-  assert.equal(both.total, roomById("economy").rate + roomById("quad").rate);
+  const both = quoteRooms(["bath", "triple"], "2027-03-01", "2027-03-02");
+  assert.equal(both.total, roomById("bath").rate + roomById("triple").rate);
 });
 
 test("validation: a good request has no errors", () => {
@@ -77,7 +79,7 @@ test("validation: dates", () => {
 test("validation: rooms, capacity and clashes", () => {
   assert.equal(check({ ...base, adults: 3 }).rooms, "roomsTooFew");
   assert.equal(check({ ...base, roomIds: [] }).rooms, "rooms");
-  assert.equal(check({ ...base, roomIds: ["economy", "economy"] }).rooms, "rooms");
+  assert.equal(check({ ...base, roomIds: ["bath", "bath"] }).rooms, "rooms");
   assert.equal(check({ ...base, roomIds: ["suite"] }).rooms, "rooms");
   assert.equal(check(base, existing).rooms, "roomTaken");
   assert.equal(check({ ...base, adults: 0 }).guests, "guests");
@@ -93,14 +95,14 @@ test("validation: guest details", () => {
 
 test("buildBookings keeps only whitelisted fields and clamps free text", () => {
   const input = {
-    ...base, roomIds: ["economy", "triple"], adults: 4, status: "annullata", channel: "Booking.com", total: 1, id: "forged",
+    ...base, roomIds: ["bath", "triple"], adults: 4, status: "annullata", channel: "Booking.com", total: 1, id: "forged",
     guest: { ...guest, notes: "x".repeat(900), lang: "de", whatsapp: "yes", isAdmin: true },
   };
-  const rows = buildBookings(input, { code: "FBR-TEST", createdAt: "2027-01-01T00:00:00.000Z", newId: (() => { let n = 0; return () => `id-${++n}`; })() });
+  const rows = buildBookings(input, { code: "TTD-TEST", createdAt: "2027-01-01T00:00:00.000Z", newId: (() => { let n = 0; return () => `id-${++n}`; })() });
   assert.equal(rows.length, 2);
   assert.deepEqual(rows.map((r) => r.id), ["id-1", "id-2"]);
   for (const r of rows) {
-    assert.equal(r.code, "FBR-TEST");
+    assert.equal(r.code, "TTD-TEST");
     assert.equal(r.status, "confermata");
     assert.equal(r.channel, "Sito web");
     assert.equal(r.guest.notes.length, 500);
@@ -108,12 +110,12 @@ test("buildBookings keeps only whitelisted fields and clamps free text", () => {
     assert.equal(r.guest.whatsapp, false);
     assert.equal("isAdmin" in r.guest, false);
   }
-  assert.equal(rows[0].total, 2 * roomById("economy").rate);
-  assert.equal(ROOMS.length, 3);
+  assert.equal(rows[0].total, 2 * roomById("bath").rate);
+  assert.equal(ROOMS.length, 5);
 });
 
 test("buildBookings accepts an explicit WhatsApp opt-in and English", () => {
-  const [row] = buildBookings({ ...base, guest: { ...guest, lang: "en", whatsapp: true } }, { code: "FBR-OPT", createdAt: "x" });
+  const [row] = buildBookings({ ...base, guest: { ...guest, lang: "en", whatsapp: true } }, { code: "TTD-OPT", createdAt: "x" });
   assert.equal(row.guest.lang, "en");
   assert.equal(row.guest.whatsapp, true);
 });

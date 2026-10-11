@@ -12,7 +12,7 @@ test("a feed we build can be read back unchanged", () => {
 });
 
 test("the feed is a valid calendar envelope with all-day events and CRLF line ends", () => {
-  const text = buildFeed({ name: "Fabrì 171", events: [events[0]] });
+  const text = buildFeed({ name: "Tuttotondo", events: [events[0]] });
   assert.match(text, /^BEGIN:VCALENDAR\r\nVERSION:2\.0\r\n/);
   assert.match(text, /DTSTART;VALUE=DATE:20270310\r\nDTEND;VALUE=DATE:20270312/);
   assert.ok(text.endsWith("END:VCALENDAR\r\n"));

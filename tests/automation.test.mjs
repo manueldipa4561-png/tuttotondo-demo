@@ -7,12 +7,12 @@ import { buildBookings } from "../assets/js/engine.js";
 import { openDb } from "../server/db.mjs";
 import { TEMPLATES } from "../server/templates.mjs";
 import {
-  cancelGuestJobs, cloudPayload, deliver, metaText, normalizePhone, render, runDue, scheduleJobs, whatsappMode,
+  accessCode, cancelGuestJobs, cloudPayload, deliver, metaText, normalizePhone, render, runDue, scheduleJobs, whatsappMode,
 } from "../server/whatsapp.mjs";
 
 const guest = { firstName: "Mario", lastName: "Rossi", email: "mario@example.com", phone: "333 1234567", lang: "it", whatsapp: true };
 const rows = (overrides = {}) =>
-  buildBookings({ roomIds: ["economy"], checkIn: "2027-03-29", checkOut: "2027-03-31", adults: 2, guest, ...overrides }, { code: "FBR-TEST", createdAt: "2027-03-01T10:00:00.000Z" });
+  buildBookings({ roomIds: ["bath"], checkIn: "2027-03-29", checkOut: "2027-03-31", adults: 2, guest, ...overrides }, { code: "TTD-TEST", createdAt: "2027-03-01T10:00:00.000Z" });
 const NOW = Date.parse("2027-03-01T10:00:00Z");
 const kinds = (jobs) => jobs.map((j) => j.kind);
 
@@ -51,7 +51,7 @@ test("without WhatsApp opt-in nothing is sent to the guest", () => {
 
 test("guests who wrote in English get English messages, the host always gets Italian", () => {
   const jobs = scheduleJobs(rows({ guest: { ...guest, lang: "en" } }), { nowMs: NOW });
-  assert.match(jobs[0].text, /Hi Mario, your booking FBR-TEST/);
+  assert.match(jobs[0].text, /Hi Mario, your booking TTD-TEST/);
   assert.equal(jobs[0].lang, "en");
   assert.equal(jobs.at(-1).lang, "it");
 });
@@ -68,14 +68,31 @@ test("every template is complete in both languages and maps to Meta's positional
       assert.deepEqual(used, [...t.order].sort(), `${kind}.${lang}: placeholders and "order" differ`);
       assert.doesNotMatch(metaText(kind, lang), /\{[a-z]/i);
       assert.match(metaText(kind, lang), /\{\{1\}\}/);
+      assert.doesNotMatch(t[lang], /^\{|\}$/, `${kind}.${lang}: Meta rejects templates that start or end with a variable`);
     }
   }
   assert.equal(render("Ciao {name}", { name: "Mario" }), "Ciao Mario");
 });
 
+test("self check-in: the instructions and the check-in-day message carry the same demo door code, in both languages", () => {
+  const code = accessCode("TTD-TEST");
+  assert.match(code, /^\d{4}$/);
+  assert.equal(accessCode("TTD-TEST"), code, "same booking, same code");
+  assert.notEqual(accessCode("TTD-OTHER"), code);
+  for (const lang of ["it", "en"]) {
+    const jobs = scheduleJobs(rows({ guest: { ...guest, lang } }), { nowMs: NOW });
+    for (const kind of ["pre_arrival", "checkin_day"]) {
+      const job = jobs.find((j) => j.kind === kind);
+      assert.equal(job.vars.accessCode, code);
+      assert.ok(job.text.includes(code), `${kind} (${lang}) shows the door code`);
+      assert.ok(TEMPLATES[kind].order.includes("accessCode"), `${kind} maps the code to a Meta variable`);
+    }
+  }
+});
+
 test("cancelling a booking cancels its pending guest messages only", () => {
   const jobs = scheduleJobs(rows(), { nowMs: NOW }).map((j) => (j.kind === "booking_confirmed" ? { ...j, status: "sent" } : j));
-  const after = cancelGuestJobs(jobs, "FBR-TEST");
+  const after = cancelGuestJobs(jobs, "TTD-TEST");
   assert.deepEqual(after.map((j) => j.status), ["sent", "cancelled", "cancelled", "cancelled", "scheduled"]);
   assert.deepEqual(cancelGuestJobs(jobs, "OTHER").map((j) => j.status), jobs.map((j) => j.status));
 });
@@ -102,14 +119,14 @@ test("cloud mode posts the approved template with the token in a header", async 
   assert.equal(call.init.headers.authorization, "Bearer secret");
   const body = JSON.parse(call.init.body);
   assert.equal(body.to, "393331234567");
-  assert.equal(body.template.name, "fbr_booking_confirmed");
+  assert.equal(body.template.name, "ttd_booking_confirmed");
   assert.equal(body.template.language.code, "it");
   assert.doesNotMatch(call.init.body, /secret/);
   assert.deepEqual(await deliver({ ...job, seeded: true }, { env, fetchImpl: noNetwork }), { mode: "demo" }); // seeded jobs never leave the machine
 });
 
 async function freshDb(outbox) {
-  const dir = await mkdtemp(join(tmpdir(), "fbr-wa-"));
+  const dir = await mkdtemp(join(tmpdir(), "ttd-wa-"));
   return openDb(join(dir, "db.json"), () => ({ bookings: [], outbox, channels: {}, mock: { reservations: [], seen: {}, lastPull: null }, clockOffsetMs: 0 }));
 }
 

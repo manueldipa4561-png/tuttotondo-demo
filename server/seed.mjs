@@ -25,7 +25,7 @@ function mulberry32(seed) {
 // and their jobs are flagged `seeded`, so a real WhatsApp token can never message them.
 export function seedState({ nowMs }) {
   const today = todayISO(nowMs);
-  const rand = mulberry32(171);
+  const rand = mulberry32(129);
   const reservations = [];
   const own = [];
   for (const room of ROOMS) {

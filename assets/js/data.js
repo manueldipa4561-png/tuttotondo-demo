@@ -1,100 +1,151 @@
-// Property content. Sources: public Booking.com listing, Tripadvisor, hotels-in-it and Expedia pages (October 2026).
-// Room inventory (one unit per room type), rates and contacts are DEMO values: confirm each with the owner.
+// Property content. Sources: public Booking.com listing (room types, amenities, scores), Tripadvisor reviews and
+// listing mirrors (October 2026). Room inventory (one unit per room type), rates, contacts and the details marked
+// "to confirm" are DEMO values: the owner checks each one (see README checklist).
 
 export const PROPERTY = {
-  name: "Fabrì 171",
-  fullName: "Fabrì 171 · Guest house",
-  address: "Via Nicola Fabrizi 171, Scala C",
+  name: "Tuttotondo",
+  fullName: "Tuttotondo · Guest house",
+  address: "Corso Vittorio Emanuele II 129",
   city: "Pescara",
+  postcode: "65121",
   area: "Centro, tra stazione e mare",
-  checkInFrom: "14:00",
-  checkInTo: "23:00",
+  checkInFrom: "15:00",
+  checkInTo: "24:00",
   checkOutBy: "10:00",
-  cin: "IT068028B4IGCFTBHB",
-  // Booking.com category scores read on the listing (October 2026). Overall 8.5 from 385 reviews comes from an
+  cin: "IT068028B4HICAJULU",
+  // Booking.com category scores read on the listing (October 2026). Overall 8.2 from 637 reviews comes from an
   // aggregator that mirrors Booking.com: verify on the live listing.
-  ratings: { overall: 8.5, count: 385, location: 9.5, comfort: 8.9, staff: 8.7, cleanliness: 8.8, value: 8.6, wifi: 9.0 },
-  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Via+Nicola+Fabrizi+171+Pescara",
-  listingUrl: "https://www.booking.com/hotel/it/fabri-171.html",
-  reviewsUrl: "https://www.booking.com/hotel/it/fabri-171.html#tab-reviews",
+  ratings: { overall: 8.2, count: 637, location: 9.0, cleanliness: 8.7, wifi: 8.7, comfort: 8.5, staff: 8.5, facilities: 8.3, value: 8.2, couples: 8.9 },
+  // Distances from the public listing. The car park (300 m, about 2.50 EUR a day) comes from one Tripadvisor review: to confirm.
+  near: { stationM: 800, beachWalkMin: 8, museumLessThanM: 1000, airportKm: 6, parkingM: 300, parkingPerDay: 2.5 },
+  cribPerNight: 15, // per child per night, ages 0–3; no extra beds
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Corso+Vittorio+Emanuele+II+129+Pescara",
+  // ponytail: the exact Booking.com page was not found while researching, so these two are searches. Replace with the real links.
+  listingUrl: "https://www.booking.com/searchresults.html?ss=Tuttotondo+Pescara",
+  reviewsUrl: "https://www.booking.com/searchresults.html?ss=Tuttotondo+Pescara",
   // ponytail: placeholder contacts, one place to change. The WhatsApp buttons point to a fake number until set.
   phone: "+39 000 000 0000",
   whatsapp: "390000000000",
   email: "info@esempio.it",
   directDiscount: 0.1, // direct price ~10% under the portals (proposal)
-  codePrefix: "FBR",
+  codePrefix: "TTD",
 };
 
-// Booking.com lists three room types. Guests per room come from the listing (sofa beds included).
+// The five Booking.com room types, one room each. Capacities and beds come from the listing; every room has
+// A/C, private bathroom, TV, bathrobes, free toiletries, free Wi-Fi, work desk, mosquito net and a coffee machine,
+// so the feature lists below only pick from that common set. Names are language-neutral because the WhatsApp
+// messages and the iCal feeds use them as they are. `crop` frames the concept image inside a round mask.
 export const ROOMS = [
   {
-    id: "economy",
-    name: "Economy",
-    type: "Doppia o twin Economy",
-    bed: "Letto matrimoniale o due singoli",
+    id: "bath",
+    name: "Double Bath",
+    type: "Doppia con bagno privato",
+    bed: "1 letto king",
     guests: 2,
-    rate: 58,
-    color: "#e4d5bb",
-    deep: "#5a4630",
+    rate: 68,
+    color: "#efc9be",
     dark: false,
-    blurb: "Il punto di partenza giusto: letto matrimoniale (o due singoli), scrivania, aria condizionata e un bagno privato con doccia walk-in e bidet. Dalla stazione al mare si fa tutto a piedi.",
-    features: ["Aria condizionata", "Bagno privato con bidet", "Scrivania", "TV satellitare"],
-    images: ["bed"], // concept images from Higgsfield (see README): swap in the owner's photos
+    blurb: "Un letto king, bagno privato, aria condizionata e scrivania: l'essenziale fatto bene, a otto minuti a piedi dal mare.",
+    features: ["Letto king", "Bagno privato", "Aria condizionata", "Scrivania"],
+    images: ["hero"], // concept images (AI generated, see README): swap in the owner's photos
+    crop: { x: "28%", y: "24%", zoom: 2.2 },
     en: {
-      type: "Economy double or twin",
-      bed: "Double bed or two singles",
-      blurb: "The right place to start: a double bed (or two singles), desk, air conditioning and a private bathroom with walk-in shower and bidet. Station to sea, all on foot.",
-      features: ["Air conditioning", "Private bathroom with bidet", "Work desk", "Satellite TV"],
+      type: "Double room with private bathroom",
+      bed: "1 king bed",
+      blurb: "A king bed, private bathroom, air conditioning and a work desk: the essentials done well, an eight-minute walk from the sea.",
+      features: ["King bed", "Private bathroom", "Air conditioning", "Work desk"],
+    },
+  },
+  {
+    id: "double",
+    name: "Double",
+    type: "Camera doppia",
+    bed: "1 letto matrimoniale",
+    guests: 2,
+    rate: 55,
+    color: "#b9c2ad",
+    dark: false,
+    blurb: "La scelta più semplice: letto matrimoniale, aria condizionata, TV e Wi-Fi gratuito, con la zanzariera per le sere d'estate.",
+    features: ["Letto matrimoniale", "Wi-Fi gratuito", "TV", "Zanzariera"],
+    images: ["terrace"],
+    crop: { x: "62%", y: "38%", zoom: 1.9 },
+    en: {
+      type: "Double room",
+      bed: "1 full bed",
+      blurb: "The simplest choice: a full bed, air conditioning, TV and free Wi-Fi, with a mosquito net for summer evenings.",
+      features: ["Full bed", "Free Wi-Fi", "TV", "Mosquito net"],
+    },
+  },
+  {
+    id: "large",
+    name: "Large Double",
+    type: "Camera doppia ampia",
+    bed: "1 letto king",
+    guests: 2,
+    rate: 78,
+    color: "#f4c79b",
+    dark: false,
+    blurb: "Più spazio, sempre un letto king: per chi vuole muoversi con calma, con scrivania, accappatoi e prodotti da bagno gratuiti.",
+    features: ["Letto king", "Più spazio", "Accappatoi", "Prodotti da bagno gratuiti"],
+    images: ["hero"],
+    crop: { x: "74%", y: "34%", zoom: 1.5 },
+    en: {
+      type: "Large double room",
+      bed: "1 king bed",
+      blurb: "More space, still a king bed: for those who like to move around, with a work desk, bathrobes and free toiletries.",
+      features: ["King bed", "More space", "Bathrobes", "Free toiletries"],
+    },
+  },
+  {
+    id: "standard",
+    name: "Standard Double",
+    type: "Camera doppia standard",
+    bed: "1 letto queen",
+    guests: 2,
+    rate: 62,
+    color: "#e8a98f",
+    dark: false,
+    blurb: "Letto queen, bagno privato e tutto quello che serve per un weekend in città: Wi-Fi gratuito, TV e aria condizionata.",
+    features: ["Letto queen", "Bagno privato", "Wi-Fi gratuito", "TV"],
+    images: ["hero"],
+    crop: { x: "62%", y: "90%", zoom: 1.7 },
+    en: {
+      type: "Standard double room",
+      bed: "1 queen bed",
+      blurb: "A queen bed, private bathroom and everything you need for a city weekend: free Wi-Fi, TV and air conditioning.",
+      features: ["Queen bed", "Private bathroom", "Free Wi-Fi", "TV"],
     },
   },
   {
     id: "triple",
-    name: "Comfort Triple",
-    type: "Tripla Comfort",
-    bed: "Letto king + divano letto, oppure due singoli + divano letto",
+    name: "Triple",
+    type: "Camera tripla",
+    bed: "1 letto king + 1 divano letto",
     guests: 3,
-    rate: 78,
-    color: "#d9b98f",
-    deep: "#6b4a22",
+    rate: 85,
+    color: "#d9805b",
     dark: false,
-    blurb: "Per tre: un letto king (o due singoli) e un divano letto, con lo spazio che gli ospiti ricordano. Accappatoi e biancheria sempre pronti.",
-    features: ["Divano letto", "Accappatoi", "Bagno privato con bidet", "Aria condizionata"],
-    images: ["hero"],
+    blurb: "Per viaggiare in tre: un letto king e un divano letto, bagno privato e aria condizionata, a metà strada tra stazione e mare.",
+    features: ["Letto king + divano letto", "Bagno privato", "TV", "Aria condizionata"],
+    images: ["terrace"],
+    crop: { x: "50%", y: "80%", zoom: 1.5 },
     en: {
-      type: "Comfort triple",
-      bed: "King bed + sofa bed, or two singles + sofa bed",
-      blurb: "For three: a king bed (or two singles) and a sofa bed, with the space guests remember. Bathrobes and linen always ready.",
-      features: ["Sofa bed", "Bathrobes", "Private bathroom with bidet", "Air conditioning"],
-    },
-  },
-  {
-    id: "quad",
-    name: "Quadruple",
-    type: "Quadrupla",
-    bed: "Letto king + 2 divani letto, oppure due singoli + 2 divani letto",
-    guests: 4,
-    rate: 98,
-    color: "#a9bccf",
-    deep: "#2d4a66",
-    dark: false,
-    blurb: "Per famiglie e piccoli gruppi: letto king (o due singoli) e due divani letto. Culla gratuita su richiesta e bollitore in camera.",
-    features: ["Due divani letto", "Culla gratuita su richiesta", "Bollitore", "Aria condizionata"],
-    images: ["hero"],
-    en: {
-      type: "Quadruple",
-      bed: "King bed + 2 sofa beds, or two singles + 2 sofa beds",
-      blurb: "For families and small groups: a king bed (or two singles) and two sofa beds. Free cot on request and a kettle in the room.",
-      features: ["Two sofa beds", "Free cot on request", "Kettle", "Air conditioning"],
+      type: "Triple room",
+      bed: "1 king bed + 1 sofa bed",
+      blurb: "For three travellers: a king bed and a sofa bed, private bathroom and air conditioning, halfway between the station and the sea.",
+      features: ["King bed + sofa bed", "Private bathroom", "TV", "Air conditioning"],
     },
   },
 ];
 
-// Guest quotes from the Booking.com listing. To be used only with the owner's OK (see README checklist).
+// Guest quotes from the Booking.com listing, shown verbatim (original English, typos included).
+// To be used only with the owner's OK (see README checklist).
 export const REVIEWS = [
-  { who: "Matthew", from: "United Kingdom", text: "Great location, right in between the station and beach. Clean, tidy and spacious." },
-  { who: "Giannina", from: "United States", text: "Wonderful, clean, comfortable room. Only a three minute walk to the beach." },
-  { who: "Ekaterine", from: "Georgia", text: "The owner was very responsive and replied to messages quickly." },
-  { who: "Silviu", from: "Romania", text: "2 minutes walk to the central square and 5 minutes walk to the beach." },
+  { who: "Valentin", from: "Romania", text: "The host was really nice and the check-in process was simple at any hour!" },
+  { who: "Sobbetti", from: "United Kingdom", text: "Super easy check in. Clean, cosy and pretty. Quiet." },
+  { who: "Nicolas", from: "Belgium", text: "Host reactivity, localisation, sound insulation, everything which was there was perfectly functionnal" },
+  { who: "Lesley", from: "United Kingdom", text: "Very comfy room, excellent communication & good location" },
+  { who: "Francesca", from: "United Kingdom", text: "The staff were incredibly helpful when I locked myself out of my room!" },
 ];
 
 export const roomById = (id) => ROOMS.find((r) => r.id === id);
