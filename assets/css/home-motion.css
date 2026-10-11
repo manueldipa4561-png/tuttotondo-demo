@@ -29,7 +29,7 @@
       from { clip-path: circle(var(--r0) at var(--cx) var(--cy)); }
       to { clip-path: circle(var(--r1) at var(--cx) var(--cy)); }
     }
-    @keyframes hero-settle { from { transform: scale(1.08); } to { transform: scale(1); } } /* small: the photo is only 1200 px wide */
+    @keyframes hero-settle { from { transform: scale(1.08); } to { transform: scale(1); } } /* small: the photo is only 1600 px wide */
     @keyframes spin { to { transform: rotate(720deg); } }
     @keyframes idle { to { transform: rotate(360deg); } }
 

@@ -142,7 +142,7 @@ export const ROOMS = [
 // Real photos from the public Booking.com listing, used for the demo (owner's permission or official photos to be
 // confirmed). [width, height] of assets/img/<name>-1600.jpg: the files are native size, never upscaled. `-800` is the small rendition.
 export const IMAGES = {
-  "bedroom-arch": [1200, 900],
+  "bedroom-arch": [1600, 1200],
   "bedroom-pink": [845, 900],
   "bedroom-towels": [1117, 900],
   "bedroom-window": [1280, 720],
