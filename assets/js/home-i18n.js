@@ -8,7 +8,7 @@ export const STRINGS = {
     // facts
     factBeach: "a piedi dalla spiaggia", factStation: "dalla stazione", factLocation: "voto per la posizione su Booking.com", factCheckin: "check-in autonomo fino a mezzanotte",
     // rooms
-    roomGuests: "{n} ospiti", perNight: "a notte", roomDirect: "diretto", roomPortal: "sui portali (stima)", roomBook: "Prenota questa camera", roomImgAlt: "Immagine concettuale: camera {room}",
+    roomGuests: "{n} ospiti", perNight: "a notte", roomDirect: "diretto", roomPortal: "sui portali (stima)", roomBook: "Prenota questa camera", roomImgAlt: "Foto dell'annuncio, abbinata provvisoriamente alla camera {room}",
     // compare
     vsNote: "Prezzi di esempio: tariffe demo da confermare con il proprietario. Il prezzo sui portali è stimato dal prezzo diretto (diretto = portale meno il {discount}%). Le commissioni dei portali sono stimate al {commission}%: su questo soggiorno la struttura ne evita circa {amount}.",
     // reviews
@@ -27,8 +27,8 @@ export const STRINGS = {
     langSwitch: "Italiano",
     skip: "Skip to content",
     navHow: "How it works", navRooms: "Rooms", navCompare: "Direct vs portals", navReviews: "Reviews", navInfo: "Info", navBook: "Book",
-    heroAlt: "Concept image: a room with a sage arched headboard, blush wall, round mirror and terracotta throw.",
-    concept: "Concept image",
+    heroAlt: "A room with a sage arched headboard, a floral cushion and a terracotta throw.",
+    photoCredit: "Photo: Booking.com listing",
     orbitLabel: "Book direct",
     orbitText: "book direct · no commissions · ",
     heroLead: "Soft-shaped rooms a short walk from the station and the sea. Book direct, let yourself in: <b>the reception lives in your phone.</b>",
@@ -56,8 +56,8 @@ export const STRINGS = {
     roomsEyebrow: "The rooms",
     roomsTitle: "Five rooms, <em>one idea.</em>",
     roomsIntro: "The five Booking.com room types, one room each. All have air conditioning, private bathroom, TV, free Wi-Fi, work desk, mosquito net, bathrobes and free toiletries; some have a terrace or balcony, kitchenette, minibar or city view: ask when you book.",
-    roomsNote: "Concept images generated with AI: they are not photos of the real rooms. Sample rates.",
-    roomGuests: "{n} guests", perNight: "a night", roomDirect: "direct", roomPortal: "on portals (est.)", roomBook: "Book this room", roomImgAlt: "Concept image: {room} room",
+    roomsNote: "Photos from the public listings (Booking.com), used for the demo. The listing does not say which photo shows which room, so the matching is provisional. Sample rates.",
+    roomGuests: "{n} guests", perNight: "a night", roomDirect: "direct", roomPortal: "on portals (est.)", roomBook: "Book this room", roomImgAlt: "Listing photo, provisionally matched to the {room} room",
     vsEyebrow: "Direct vs portals",
     vsTitle: "Two circles, <em>same room.</em>",
     vsIntro: "The big circle is the estimated price on the portals, the dark one is the direct price. The difference is the commission the property does not pay, handed back to you: about 10% less (demo proposal).",
@@ -77,6 +77,10 @@ export const STRINGS = {
     c2h: "You get the code", c2p: "Two days before, on WhatsApp, with the instructions.",
     c3h: "You let yourself in", c3p: "From 15:00 to midnight, no reception.",
     c4h: "Write us if needed", c4p: "We reply on WhatsApp and by phone.",
+    galH: "Inside Tuttotondo",
+    galA1: "A kitchenette with a round mirror, hob, coffee machine and black sink.", galC1: "Kitchenette, in some rooms",
+    galA2: "A corner with a small black round table, two chairs, a round mirror and a globe pendant lamp.", galC2: "Table and mirror, all round",
+    galA3: "A hallway with an arch at the end.", galC3: "The arched hallway",
     timesH: "Times and rules", missingH: "What is not here",
     missingP: "No breakfast, no reception, no common areas; not every room has a kettle. In return: self check-in until midnight, free Wi-Fi and rooms guests describe as quiet.",
     whereH: "Between the station and the sea", mapsBtn: "Open in Google Maps",
@@ -94,6 +98,6 @@ export const STRINGS = {
     q8: "Can I cancel?", a8: "Free of charge up to 48 hours before arrival (demo proposal, to be confirmed).",
     q9: "Why book direct?", a9: "No commission for the property, so a lower price (demo proposal: about 10% less than the portals), instant confirmation and your door code straight on WhatsApp.",
     finalTitle: "Ready for a <em>round room?</em>", finalP: "No commissions, instant confirmation, reception in your phone.", finalBtn: "Book direct",
-    footHost: "Host console (demo)", footDemo: "Demo site: contacts, rates and availability are samples. Concept images generated with AI.", footMade: "Direct bookings, zero commissions",
+    footHost: "Host console (demo)", footDemo: "Demo site: contacts, rates and availability are samples. Photos from the public listings (Booking.com), used for the demo: the owner's permission or official photos to be confirmed.", footMade: "Direct bookings, zero commissions",
   },
 };

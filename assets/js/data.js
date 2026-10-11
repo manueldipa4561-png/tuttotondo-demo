@@ -34,7 +34,8 @@ export const PROPERTY = {
 // The five Booking.com room types, one room each. Capacities and beds come from the listing; every room has
 // A/C, private bathroom, TV, bathrobes, free toiletries, free Wi-Fi, work desk, mosquito net and a coffee machine,
 // so the feature lists below only pick from that common set. Names are language-neutral because the WhatsApp
-// messages and the iCal feeds use them as they are. `crop` frames the concept image inside a round mask.
+// messages and the iCal feeds use them as they are. `crop` frames the photo inside a round mask. The listing does not
+// say which photo shows which room, so the room-to-photo mapping below is a placeholder (see README checklist).
 export const ROOMS = [
   {
     id: "bath",
@@ -47,8 +48,8 @@ export const ROOMS = [
     dark: false,
     blurb: "Un letto king, bagno privato, aria condizionata e scrivania: l'essenziale fatto bene, a otto minuti a piedi dal mare.",
     features: ["Letto king", "Bagno privato", "Aria condizionata", "Scrivania"],
-    images: ["hero"], // concept images (AI generated, see README): swap in the owner's photos
-    crop: { x: "28%", y: "24%", zoom: 2.2 },
+    images: ["bedroom-arch"],
+    crop: { x: "44%", y: "40%", zoom: 1.12 },
     en: {
       type: "Double room with private bathroom",
       bed: "1 king bed",
@@ -67,8 +68,8 @@ export const ROOMS = [
     dark: false,
     blurb: "La scelta più semplice: letto matrimoniale, aria condizionata, TV e Wi-Fi gratuito, con la zanzariera per le sere d'estate.",
     features: ["Letto matrimoniale", "Wi-Fi gratuito", "TV", "Zanzariera"],
-    images: ["terrace"],
-    crop: { x: "62%", y: "38%", zoom: 1.9 },
+    images: ["bedroom-pink"],
+    crop: { x: "50%", y: "34%", zoom: 1 },
     en: {
       type: "Double room",
       bed: "1 full bed",
@@ -87,8 +88,8 @@ export const ROOMS = [
     dark: false,
     blurb: "Più spazio, sempre un letto king: per chi vuole muoversi con calma, con scrivania, accappatoi e prodotti da bagno gratuiti.",
     features: ["Letto king", "Più spazio", "Accappatoi", "Prodotti da bagno gratuiti"],
-    images: ["hero"],
-    crop: { x: "74%", y: "34%", zoom: 1.5 },
+    images: ["bedroom-towels"],
+    crop: { x: "46%", y: "42%", zoom: 1 },
     en: {
       type: "Large double room",
       bed: "1 king bed",
@@ -107,8 +108,8 @@ export const ROOMS = [
     dark: false,
     blurb: "Letto queen, bagno privato e tutto quello che serve per un weekend in città: Wi-Fi gratuito, TV e aria condizionata.",
     features: ["Letto queen", "Bagno privato", "Wi-Fi gratuito", "TV"],
-    images: ["hero"],
-    crop: { x: "62%", y: "90%", zoom: 1.7 },
+    images: ["bedroom-window"],
+    crop: { x: "38%", y: "50%", zoom: 1 },
     en: {
       type: "Standard double room",
       bed: "1 queen bed",
@@ -127,8 +128,8 @@ export const ROOMS = [
     dark: false,
     blurb: "Per viaggiare in tre: un letto king e un divano letto, bagno privato e aria condizionata, a metà strada tra stazione e mare.",
     features: ["Letto king + divano letto", "Bagno privato", "TV", "Aria condizionata"],
-    images: ["terrace"],
-    crop: { x: "50%", y: "80%", zoom: 1.5 },
+    images: ["dining-corner"],
+    crop: { x: "50%", y: "50%", zoom: 1 },
     en: {
       type: "Triple room",
       bed: "1 king bed + 1 sofa bed",
@@ -137,6 +138,18 @@ export const ROOMS = [
     },
   },
 ];
+
+// Real photos from the public Booking.com listing, used for the demo (owner's permission or official photos to be
+// confirmed). [width, height] of assets/img/<name>-1600.jpg: the files are native size, never upscaled. `-800` is the small rendition.
+export const IMAGES = {
+  "bedroom-arch": [1200, 900],
+  "bedroom-pink": [845, 900],
+  "bedroom-towels": [1117, 900],
+  "bedroom-window": [1280, 720],
+  "dining-corner": [1280, 720],
+  kitchenette: [1280, 720],
+  corridor: [506, 900],
+};
 
 // Guest quotes from the Booking.com listing, shown verbatim (original English, typos included).
 // To be used only with the owner's OK (see README checklist).

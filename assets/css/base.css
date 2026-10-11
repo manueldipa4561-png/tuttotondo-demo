@@ -1,6 +1,6 @@
 /* Tuttotondo: design tokens, type, buttons, nav, footer. Home in home.css (+ home-motion.css), booking in booking.css,
    host console in admin.css. Shape language: circles and semicircles. The palette comes from the rooms: blush walls,
-   sage arched headboards, a terracotta throw, the apricot of the terrace at golden hour. */
+   sage arched headboards, a terracotta throw, coral wall lamps. */
 @property --turn { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
 :root {

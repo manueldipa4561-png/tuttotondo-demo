@@ -5,7 +5,7 @@ import { $, $$ } from "./dom.js";
 const O_CENTRE_ABOVE_BASELINE = 0.27; // the middle of a lowercase "o" sits about this many em above the baseline
 const O_RADIUS = 0.25; // em: the circle starts as big as the "o" itself
 const CHAT_PADDING_PX = 16; // the chat's own top and bottom padding (12 + 4)
-const REVEAL = ".sec-head > *, .fact, .room__disc, .room__name, .quote, .steps4 li, .vs__panel, .final__disc, .walk__step, .msg, .info__col, .faq";
+const REVEAL = ".sec-head > *, .fact, .room__disc, .room__name, .gallery__disc, .gallery__item p, .quote, .steps4 li, .vs__panel, .final__disc, .walk__step, .msg, .info__col, .faq";
 const root = document.documentElement;
 const motionOff = () => root.classList.contains("calm");
 

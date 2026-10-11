@@ -34,7 +34,7 @@ Zero dependencies, Node 22+ (developed on 24). Pages:
 ## Design concept: "tutto tondo" (all round)
 
 Circles and semicircles everywhere: pill buttons, round image masks, round badges, ring charts, a floating capsule nav. The
-palette comes from the real rooms (blush walls, sage arched headboards, terracotta throw, the apricot of the terrace).
+palette comes from the real rooms (blush walls, sage arched headboards, terracotta throw, coral wall lamps).
 Type: **Bricolage Grotesque** for display (characterful, heavy, round counters; a variable font with an optical-size axis) and
 **Figtree** for body. No serif, on purpose.
 
@@ -56,7 +56,7 @@ timelines (Firefox for now) get one-shot reveals through IntersectionObserver; `
 - WhatsApp: dry-run outbox. Real sending needs the Cloud API credentials in `.env` (see `.env.example`) and Meta-approved utility templates (texts from `metaText()` in `whatsapp.mjs`), plus the guest's opt-in (the booking page asks for it).
 - **Door code (DEMO):** a 4-digit number derived from the booking code (`accessCode()` in `server/whatsapp.mjs`, sha1). It exists to show the idea. Real life: the smart-lock API issues a code valid from check-in to check-out.
 - Payments: none online (pay at the property or by bank transfer), cancellation 48 h free is a demo proposal.
-- Images: **two AI-generated concept images**, cropped five ways. The view from the window is not Pescara. Every use is labelled "Concept image". Replace with the owner's photos.
+- Photos: the **real photos from the public Booking.com listing**, used for the demo and credited on the page (hero caption, footer). They are native size (845–1280 px wide, never upscaled), so the hero stops growing as a full-bleed image on very wide screens. **The listing does not say which photo shows which room**, so the room-to-photo mapping is a placeholder (Double Bath: `bedroom-arch`, Double: `bedroom-pink`, Large Double: `bedroom-towels`, Standard Double: `bedroom-window`, Triple: `dining-corner`; `kitchenette` and `corridor` appear in "Inside Tuttotondo"). Change it in `assets/js/data.js`.
 
 ## Owner checklist (every demo value to confirm)
 
@@ -66,6 +66,7 @@ timelines (Firefox for now) get one-shot reveals through IntersectionObserver; `
 - [ ] Free cancellation up to 48 h; payment at the property or by transfer; how cash is collected when nobody is at a desk.
 - [ ] The real entry procedure (door code, key box, smart lock) and what the arrival texts say; the demo code is not a real one.
 - [ ] Booking.com score 8.2 and 637 reviews come from a site that mirrors Booking.com: verify on the live listing. Category scores (location 9.0, cleanliness 8.7, Wi-Fi 8.7, comfort 8.5, staff 8.5, facilities 8.3, value 8.2, couples 8.9) were read on the listing in October 2026.
+- [ ] **Photos:** they come from the public Booking.com listing. Get the owner's permission or replace them with official photos, and say which photo shows which room (the mapping in `data.js` is a placeholder).
 - [ ] Permission to show the five guest quotes (Booking.com guests, shown verbatim, original English).
 - [ ] Booking.com and review links (`listingUrl`, `reviewsUrl`): the exact listing page was not found, so they are searches.
 - [ ] Car park about 300 m away at about 2.50 EUR a day: from one Tripadvisor review.
@@ -76,6 +77,6 @@ timelines (Firefox for now) get one-shot reveals through IntersectionObserver; `
 
 ## Sources (October 2026)
 
-Public Booking.com listing (room types, amenities, scores, guest quotes), Tripadvisor reviews and listing mirrors (address, check-in and
+Public Booking.com listing (room types, amenities, scores, guest quotes, photos), Tripadvisor reviews and listing mirrors (address, check-in and
 check-out times, no breakfast, no reception, car park), MDN and Chrome documentation for CSS scroll-driven animations (supported in
 Chromium 115+ and Safari 26; not yet Baseline because of Firefox), Meta documentation for WhatsApp Cloud API templates and the 24-hour window.

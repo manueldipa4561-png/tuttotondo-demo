@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ROOMS } from "../assets/js/data.js";
+import { IMAGES, ROOMS } from "../assets/js/data.js";
 import { STRINGS } from "../assets/js/home-i18n.js";
 import { accessCode } from "../server/whatsapp.mjs";
 
@@ -28,10 +28,22 @@ test("the walkthrough shows the door code the server would send for its example 
   assert.equal(shown, accessCode("TTD-K7M2"));
 });
 
-test("every room has the English copy, a crop for its round image, and an image that exists", async () => {
+test("every room has the English copy, a crop for its round image, and a listing photo that exists", async () => {
   for (const room of ROOMS) {
     assert.ok(room.en.type && room.en.bed && room.en.blurb && room.en.features.length, `${room.id}: English copy`);
-    assert.ok(room.crop.x && room.crop.y && room.crop.zoom >= 1, `${room.id}: crop`);
-    await readFile(join(ROOT, "assets/img", `${room.images[0]}-1600.jpg`));
+    assert.ok(room.crop.x && room.crop.y && room.crop.zoom >= 1 && room.crop.zoom <= 1.3, `${room.id}: crop (never zoom past 1.3: the photos are native size)`);
+    assert.ok(IMAGES[room.images[0]], `${room.id}: size of ${room.images[0]} is listed in IMAGES`);
   }
+});
+
+test("every listing photo exists in both renditions and the page uses only those", async () => {
+  for (const name of Object.keys(IMAGES)) {
+    await readFile(join(ROOT, "assets/img", `${name}-800.jpg`));
+    await readFile(join(ROOT, "assets/img", `${name}-1600.jpg`));
+  }
+  for (const [, name] of html.matchAll(/assets\/img\/([\w-]+?)-(?:800|1600)\.jpg/g)) assert.ok(IMAGES[name], `index.html uses ${name}`);
+});
+
+test("the home page makes no claim about concept or AI-generated images", () => {
+  assert.doesNotMatch(html + JSON.stringify(STRINGS), /concept|concettual|AI-generated|generat\w+ con AI|generated with AI/i);
 });

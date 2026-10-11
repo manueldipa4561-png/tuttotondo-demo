@@ -1,9 +1,8 @@
 // Sections of the home page that are drawn from data.js, so numbers and room details live in one place.
-import { PROPERTY, ROOMS, REVIEWS } from "./data.js";
+import { IMAGES, PROPERTY, ROOMS, REVIEWS } from "./data.js";
 import { addDays, fmtEuro, quote, todayISO } from "./store.js";
 import { $, h } from "./dom.js";
 
-const IMAGE_SIZE = { hero: [1600, 1062], terrace: [1280, 1600] };
 const FACT_TONES = ["#efc9be", "#c9d1bd", "#f6d2a8", "#e8a98f"];
 const RING_TONES = ["#c8613a", "#f0b070", "#9ca58f", "#e3a999", "#a4472a", "#566049", "#d98f3f", "#17140f"];
 const QUOTE_TONES = ["#efc9be", "#c9d1bd", "#f6d2a8", "#e8a98f", "#dfe4d4"];
@@ -43,7 +42,7 @@ function renderRooms({ t, lang }) {
   const nextDay = addDays(from, 1);
   $("[data-rooms]").replaceChildren(...ROOMS.map((room) => {
     const q = quote(room, from, nextDay); // one night: direct price against the estimated portal price
-    const [width, height] = IMAGE_SIZE[room.images[0]];
+    const [width, height] = IMAGES[room.images[0]];
     const copy = lang === "en" ? room.en : room;
     return h("li", { className: "room", style: { "--room": room.color, "--crop-x": room.crop.x, "--crop-y": room.crop.y, "--crop-zoom": String(room.crop.zoom) } },
       h("div", { className: "room__media" },

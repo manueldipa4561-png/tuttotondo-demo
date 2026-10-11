@@ -29,7 +29,7 @@
       from { clip-path: circle(var(--r0) at var(--cx) var(--cy)); }
       to { clip-path: circle(var(--r1) at var(--cx) var(--cy)); }
     }
-    @keyframes hero-settle { from { transform: scale(1.35); } to { transform: scale(1); } }
+    @keyframes hero-settle { from { transform: scale(1.08); } to { transform: scale(1); } } /* small: the photo is only 1200 px wide */
     @keyframes spin { to { transform: rotate(720deg); } }
     @keyframes idle { to { transform: rotate(360deg); } }
 
@@ -79,6 +79,8 @@
     /* ---------- c) rooms: each disc opens like the hero circle */
     .room__disc { animation: disc-open linear both; animation-timeline: view(); animation-range: entry 0% entry 62%; }
     .room__badge { animation: pop linear both; animation-timeline: view(); animation-range: entry 40% entry 80%; }
+    .gallery__disc { animation: disc-open linear both; animation-timeline: view(); animation-range: entry 0% entry 62%; }
+    .gallery__item p { animation: rise linear both; animation-timeline: view(); animation-range: entry 25% entry 80%; }
     .room__name, .room__type, .room__blurb, .room__price { animation: rise linear both; animation-timeline: view(); animation-range: entry 25% entry 80%; }
     @keyframes disc-open { from { clip-path: circle(0% at 50% 50%); transform: scale(0.78); } to { clip-path: circle(75% at 50% 50%); transform: none; } }
 
@@ -105,8 +107,8 @@
   .no-sda:not(.calm) [data-reveal] { opacity: 0; transform: translateY(32px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
   .no-sda:not(.calm) .fact[data-reveal], .no-sda:not(.calm) .final__disc[data-reveal] { transform: scale(0.6); }
   .no-sda:not(.calm) [data-reveal].is-in { opacity: 1; transform: none; }
-  .no-sda:not(.calm) .room__disc[data-reveal] { clip-path: circle(0% at 50% 50%); }
-  .no-sda:not(.calm) .room__disc[data-reveal].is-in { clip-path: circle(75% at 50% 50%); }
+  .no-sda:not(.calm) .room__disc[data-reveal], .no-sda:not(.calm) .gallery__disc[data-reveal] { clip-path: circle(0% at 50% 50%); }
+  .no-sda:not(.calm) .room__disc[data-reveal].is-in, .no-sda:not(.calm) .gallery__disc[data-reveal].is-in { clip-path: circle(75% at 50% 50%); }
   .no-sda:not(.calm) .ring--fill { stroke-dashoffset: 100; transition: stroke-dashoffset 1.6s var(--ease) calc(var(--n, 0) * 90ms); }
   .no-sda:not(.calm) .rings.is-in .ring--fill { stroke-dashoffset: calc(100 - var(--score) * 10); }
 }
