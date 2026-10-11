@@ -99,7 +99,7 @@ export const STRINGS = {
     gInfants: "{n} {w}", infant: "neonato", infantsW: "neonati",
     mobileLabel: "{rooms} · {n} {nights} · risparmi {x}",
     sameDayLate: "Arrivi stasera? Scrivici su WhatsApp: ti confermiamo subito l'orario di check-in.",
-    apiError: "Il server non risponde. Avvia il sito con `npm start` e ricarica la pagina.",
+    apiError: "Non riesco a raggiungere il sistema di prenotazione. Riprova tra qualche istante.",
   },
   en: {
     title: "Book direct — Tuttotondo, Pescara",
@@ -200,6 +200,6 @@ export const STRINGS = {
     gInfants: "{n} {w}", infant: "infant", infantsW: "infants",
     mobileLabel: "{rooms} · {n} {nights} · save {x}",
     sameDayLate: "Arriving tonight? Message us on WhatsApp and we'll confirm your check-in time right away.",
-    apiError: "The server isn't responding. Start the site with `npm start` and reload the page.",
+    apiError: "We can't reach the booking system right now. Please try again in a moment.",
   },
 };

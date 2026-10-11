@@ -5,8 +5,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { roomById } from "../assets/js/data.js";
 import { openDb } from "../server/db.mjs";
-import { buildFeed, parseFeed } from "../server/ics.mjs";
-import { exportFeed, loadChannels, mockPull, mockReserve, reconcile, syncChannel } from "../server/channels.mjs";
+import { buildFeed, parseFeed } from "../assets/js/api/ics.js";
+import { exportFeed, loadChannels, mockPull, mockReserve, reconcile, syncChannel } from "../assets/js/api/channels.js";
 
 const channel = { id: "booking", name: "Booking.com", mock: true, feeds: {} };
 const ctx = { today: "2027-03-01", createdAt: "2027-03-01T00:00:00.000Z" };

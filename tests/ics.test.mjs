@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildFeed, parseFeed } from "../server/ics.mjs";
+import { buildFeed, parseFeed } from "../assets/js/api/ics.js";
 
 const events = [
   { uid: "a@x", start: "2027-03-10", end: "2027-03-12", summary: "Reserved" },

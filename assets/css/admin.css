@@ -45,3 +45,5 @@
 @media (max-width: 1000px) {
   .panel-grid--wa { grid-template-columns: minmax(0, 1fr); }
 }
+.demo-note { margin: 12px 0 0; padding: 12px 18px; border-radius: var(--r-md); background: color-mix(in srgb, var(--apricot) 22%, var(--paper-2)); font-size: 14px; }
+.demo-note[hidden] { display: none; }

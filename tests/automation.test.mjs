@@ -5,10 +5,10 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { buildBookings } from "../assets/js/engine.js";
 import { openDb } from "../server/db.mjs";
-import { TEMPLATES } from "../server/templates.mjs";
+import { TEMPLATES } from "../assets/js/api/templates.js";
 import {
   accessCode, cancelGuestJobs, cloudPayload, deliver, metaText, normalizePhone, render, runDue, scheduleJobs, whatsappMode,
-} from "../server/whatsapp.mjs";
+} from "../assets/js/api/whatsapp.js";
 
 const guest = { firstName: "Mario", lastName: "Rossi", email: "mario@example.com", phone: "333 1234567", lang: "it", whatsapp: true };
 const rows = (overrides = {}) =>

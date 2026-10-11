@@ -1,7 +1,7 @@
-import { randomUUID } from "node:crypto";
-import { PROPERTY, ROOMS } from "../assets/js/data.js";
-import { CHANNEL_DIRECT, CHANNEL_PHONE, addDays, nightsBetween, romeToUtcMs, todayISO } from "../assets/js/engine.js";
-import { scheduleJobs } from "./whatsapp.mjs";
+import { uuid } from "./ids.js";
+import { PROPERTY, ROOMS } from "../data.js";
+import { CHANNEL_DIRECT, CHANNEL_PHONE, addDays, nightsBetween, romeToUtcMs, todayISO } from "../engine.js";
+import { scheduleJobs } from "./whatsapp.js";
 
 const BACK_DAYS = 10;
 const AHEAD_DAYS = 150;
@@ -46,7 +46,7 @@ export function seedState({ nowMs }) {
     const nights = nightsBetween(s.start, s.end);
     const withThread = s.channel === CHANNEL_DIRECT && s.start > today;
     return {
-      id: randomUUID(), code: `${PROPERTY.codePrefix}-S${String(i + 1).padStart(3, "0")}`, roomId: s.roomId,
+      id: uuid(), code: `${PROPERTY.codePrefix}-S${String(i + 1).padStart(3, "0")}`, roomId: s.roomId,
       checkIn: s.start, checkOut: s.end, nights, total: nights * room(s.roomId).rate, adults: 2,
       party: { adults: 2, children: 0, infants: 0 }, rooms: 1, payment: "struttura", invoice: null, channel: s.channel,
       status: "confermata", createdAt: new Date(romeToUtcMs(addDays(today, -3), "15:20")).toISOString(), seeded: true,

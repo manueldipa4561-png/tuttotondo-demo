@@ -1,7 +1,7 @@
 // Host console: KPIs, channel sync, WhatsApp outbox, planning and bookings. Talks to the local API (server/app.mjs).
 import { initSite } from "./site.js";
 import { ROOMS, roomById } from "./data.js";
-import { adminBookings, getChannels, getOutbox, adminPost, cancelBooking } from "./store.js";
+import { adminBookings, getChannels, getOutbox, adminPost, cancelBooking, isDemo } from "./store.js";
 import { addDays, nightsBetween, eachNight, fmtEuro, fmtDate, parseISO, isActive, OTA_COMMISSION, CHANNEL_DIRECT, CHANNEL_BOOKING, CHANNEL_PHONE } from "./engine.js";
 
 initSite();
@@ -41,11 +41,18 @@ const say = (text, isError = false) => {
   el.classList.toggle("is-error", isError);
 };
 
+// on a page hosted without a server the data lives in this browser: say so, instead of "demo in locale"
+function markDemo() {
+  $("[data-demo-note]").hidden = !isDemo();
+  if (isDemo()) $(".admin__head .eyebrow").textContent = "Area gestore · demo nel browser";
+}
+
 async function load() {
   try {
     const [book, channels, outbox] = await Promise.all([adminBookings(), getChannels(), getOutbox()]);
     snapshot = { today: book.today, bookings: book.bookings, channels, outbox };
     render();
+    markDemo();
   } catch (err) {
     if (err.status === 401 && !sessionStorage.getItem("adminToken")) {
       const token = prompt("Token gestore (ADMIN_TOKEN)");
@@ -54,7 +61,7 @@ async function load() {
         return load();
       }
     }
-    say(`Server non raggiungibile (${err.message}). Avvia il sito con npm start.`, true);
+    say(`Non riesco a raggiungere il sistema (${err.message}). Riprova tra qualche istante.`, true);
   }
 }
 
@@ -117,7 +124,7 @@ function renderChannels() {
       : "Non ancora letto.";
     return h("div", {},
       h("div", { className: "panel__head" }, h("h3", { className: "panel__title", textContent: c.name }),
-        h("span", { className: `badge${c.mock ? "" : " badge--web"}`, textContent: c.mock ? "Simulato in locale" : "Collegato" })),
+        h("span", { className: `badge${c.mock ? "" : " badge--web"}`, textContent: c.mock ? "Simulato" : "Collegato" })),
       h("p", { textContent: `${last} Rilettura automatica ogni 30 secondi.` }),
       c.errors?.length ? h("p", { className: "panel__error", textContent: `Non riesco a leggere: ${c.errors.join(" · ")}` }) : null,
       h("p", { className: "eyebrow", textContent: "Il nostro calendario, da dare al portale" }),
@@ -164,7 +171,7 @@ function renderClock() {
   const waiting = jobs.filter((j) => j.status === "scheduled").length;
   const mode = whatsapp.mode === "cloud"
     ? "Collegato a WhatsApp Cloud API: i messaggi partono davvero."
-    : "Modalità demo: i messaggi restano in questa pagina e non partono davvero. Per inviarli servono i dati WhatsApp nel file .env.";
+    : "Modalità demo: i messaggi restano in questa pagina e non partono davvero. Per inviarli servono i dati di WhatsApp Business (token e numero).";
   const jump = (days) => act(() => adminPost("demo/clock", { days }), `Orologio demo avanzato di ${days} ${days === 1 ? "giorno" : "giorni"}.`);
   $("[data-clock]").replaceChildren(
     h("div", { className: "panel__head" }, h("h3", { className: "panel__title", textContent: "Messaggi" }),

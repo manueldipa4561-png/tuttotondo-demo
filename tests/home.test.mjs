@@ -6,7 +6,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { IMAGES, ROOMS } from "../assets/js/data.js";
 import { STRINGS } from "../assets/js/home-i18n.js";
-import { accessCode } from "../server/whatsapp.mjs";
+import { accessCode } from "../assets/js/api/whatsapp.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(join(ROOT, "index.html"), "utf8");

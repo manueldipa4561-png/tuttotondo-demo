@@ -1,11 +1,11 @@
-import { createHash, randomUUID } from "node:crypto";
-import { PROPERTY, ROOMS, roomById } from "../assets/js/data.js";
-import { CHANNEL_BOOKING, MAX_NIGHTS, isActive, isIsoDate, nightsBetween, todayISO } from "../assets/js/engine.js";
-import { buildFeed, parseFeed } from "./ics.mjs";
-import { conflictJob } from "./whatsapp.mjs";
+import { hashHex, uuid } from "./ids.js";
+import { PROPERTY, ROOMS, roomById } from "../data.js";
+import { CHANNEL_BOOKING, MAX_NIGHTS, isActive, isIsoDate, nightsBetween, todayISO } from "../engine.js";
+import { buildFeed, parseFeed } from "./ics.js";
+import { conflictJob } from "./whatsapp.js";
 
 const FETCH_TIMEOUT_MS = 8000;
-const otaId = (channelId, uid) => `ota-${createHash("sha1").update(`${channelId}:${uid}`).digest("hex").slice(0, 16)}`;
+const otaId = (channelId, uid) => `ota-${hashHex(`${channelId}:${uid}`)}`;
 
 // ---------- configuration: real iCal links from the environment, or the built-in mock Booking.com
 export function loadChannels({ env, baseUrl }) {
@@ -115,7 +115,7 @@ export function mockReserve(state, { roomId, start, end }, today) {
   const clash = (list) => list.some((x) => x.start < end && start < x.end);
   const own = state.mock.reservations.filter((r) => r.roomId === roomId);
   if (clash(own) || clash(state.mock.seen[roomId] ?? [])) throw fail("unavailable");
-  const reservation = { uid: `${randomUUID()}@booking.demo`, roomId, start, end };
+  const reservation = { uid: `${uuid()}@booking.demo`, roomId, start, end };
   return { ...state, mock: { ...state.mock, reservations: [...state.mock.reservations, reservation] } };
 }
 

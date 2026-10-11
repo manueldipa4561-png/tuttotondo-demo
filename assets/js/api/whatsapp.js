@@ -1,7 +1,7 @@
-import { createHash, randomUUID } from "node:crypto";
-import { PROPERTY, roomById } from "../assets/js/data.js";
-import { addDays, fmtDate, fmtEuro, romeToUtcMs } from "../assets/js/engine.js";
-import { TEMPLATES, accessText } from "./templates.mjs";
+import { hashHex, uuid } from "./ids.js";
+import { PROPERTY, roomById } from "../data.js";
+import { addDays, fmtDate, fmtEuro, romeToUtcMs } from "../engine.js";
+import { TEMPLATES, accessText } from "./templates.js";
 
 const MAX_ATTEMPTS = 3;
 const RETRY_MS = 60_000;
@@ -24,7 +24,7 @@ export function normalizePhone(raw, countryCode = "39") {
 // Real life: ask the smart-lock API for a code that is valid from check-in to check-out, and send that one.
 const DOOR_CODE_DIGITS = 4;
 export const accessCode = (bookingCode) =>
-  String(createHash("sha1").update(bookingCode).digest().readUInt32BE(0) % 10 ** DOOR_CODE_DIGITS).padStart(DOOR_CODE_DIGITS, "0");
+  String(parseInt(hashHex(bookingCode).slice(0, 8), 16) % 10 ** DOOR_CODE_DIGITS).padStart(DOOR_CODE_DIGITS, "0");
 
 export const render = (text, vars) => text.replace(/\{(\w+)\}/g, (_, key) => String(vars[key] ?? ""));
 
@@ -62,7 +62,7 @@ function guestVars(rows, lang) {
 }
 
 const makeJob = (b, kind, audience, to, lang, vars, sendAtMs, extra = {}) => ({
-  id: randomUUID(), code: b.code, kind, audience, to, lang, template: templateName(kind), vars,
+  id: uuid(), code: b.code, kind, audience, to, lang, template: templateName(kind), vars,
   text: render(TEMPLATES[kind][lang], vars), sendAt: new Date(sendAtMs).toISOString(), status: "scheduled", attempts: 0, ...extra,
 });
 

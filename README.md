@@ -11,7 +11,7 @@ Everything is local. The server binds to `127.0.0.1` only, nothing is deployed, 
 
 ```sh
 npm start        # http://localhost:4129/
-node --test      # 54 tests
+node --test      # 62 tests
 ```
 
 Zero dependencies, Node 22+ (developed on 24). Pages:
@@ -22,9 +22,14 @@ Zero dependencies, Node 22+ (developed on 24). Pages:
 | `/prenota.html` | Booking flow (IT/EN), availability from the local API |
 | `/gestione.html` | Host console: KPIs, channel sync, Booking.com simulator, WhatsApp outbox with demo clock, planning board |
 
+## Static hosting (Netlify, GitHub Pages)
+
+The pages also work on a host that only serves files. When a page finds no API (the first request to `/api/availability` is not answered in JSON), `assets/js/store.js` loads `assets/js/demo-backend.js`, which answers the same routes inside the browser with the same booking core. The data lives in the visitor's `localStorage` and starts from a fresh seed every day; the manager panel says "demo nel browser". Nothing leaves the browser and no WhatsApp message is sent. This is for showing the demo: real bookings need the Node server.
+
 ## Structure
 
-- `server/`: HTTP + JSON API, JSON-file database, iCal export/import, mock Booking.com, WhatsApp scheduler, seed data. `templates.mjs` holds the message texts, `whatsapp.mjs` the schedule and the demo door code.
+- `server/`: the Node side. `app.mjs` is the HTTP server and the static pages, `db.mjs` the JSON-file database, `index.mjs` the entry point and timers.
+- `assets/js/api/`: the booking API with no Node in it. `core.js` has the routes, then iCal export/import, mock Booking.com, WhatsApp scheduler and seed data. `templates.js` holds the message texts, `whatsapp.js` the schedule and the demo door code. The Node server and the in-browser demo backend (`assets/js/demo-backend.js`) both run this same code.
 - `assets/js/engine.js`: pure booking rules shared by browser and server (seat-based availability, prices, validation).
 - `assets/js/data.js`: the property, the five rooms, ratings, quotes. One place to edit content.
 - `assets/js/home*.js`, `assets/css/home.css`, `home-motion.css`: the home page. `home-i18n.js` has the English; the Italian lives in `index.html`.
@@ -53,8 +58,8 @@ timelines (Firefox for now) get one-shot reveals through IntersectionObserver; `
 ## What is simulated
 
 - Booking.com: a mock channel that re-reads our calendar only every few minutes, so double bookings can happen and are flagged. Real life: Booking.com "Sync calendars" iCal links, which are pulled about every 1–4 hours (not instant).
-- WhatsApp: dry-run outbox. Real sending needs the Cloud API credentials in `.env` (see `.env.example`) and Meta-approved utility templates (texts from `metaText()` in `whatsapp.mjs`), plus the guest's opt-in (the booking page asks for it).
-- **Door code (DEMO):** a 4-digit number derived from the booking code (`accessCode()` in `server/whatsapp.mjs`, sha1). It exists to show the idea. Real life: the smart-lock API issues a code valid from check-in to check-out.
+- WhatsApp: dry-run outbox. Real sending needs the Cloud API credentials in `.env` (see `.env.example`) and Meta-approved utility templates (texts from `metaText()` in `assets/js/api/whatsapp.js`), plus the guest's opt-in (the booking page asks for it).
+- **Door code (DEMO):** a 4-digit number derived from the booking code (`accessCode()` in `assets/js/api/whatsapp.js`, a stable string hash). It exists to show the idea. Real life: the smart-lock API issues a code valid from check-in to check-out.
 - Payments: none online (pay at the property or by bank transfer), cancellation 48 h free is a demo proposal.
 - Photos: the **real photos from the public Booking.com listing**, used for the demo and credited on the page (hero caption, footer). They are native size (845–1600 px wide, never upscaled; the hero uses the largest size the listing serves, 1600×1200, with a fine grain on phones), so the hero stops growing as a full-bleed image on very wide screens. **The listing does not say which photo shows which room**, so the room-to-photo mapping is a placeholder (Double Bath: `bedroom-arch`, Double: `bedroom-pink`, Large Double: `bedroom-towels`, Standard Double: `bedroom-window`, Triple: `dining-corner`; `kitchenette` and `corridor` appear in "Inside Tuttotondo"). Change it in `assets/js/data.js`.
 
