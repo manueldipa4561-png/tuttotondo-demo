@@ -1,115 +1,139 @@
-/* Fabrì 171: design tokens, type, buttons, nav, footer. Home in home.css, booking in booking.css, host console in admin.css. */
+/* Tuttotondo: design tokens, type, buttons, nav, footer. Home in home.css (+ home-motion.css), booking in booking.css,
+   host console in admin.css. Shape language: circles and semicircles. The palette comes from the rooms: blush walls,
+   sage arched headboards, a terracotta throw, the apricot of the terrace at golden hour. */
+@property --turn { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
 :root {
-  --paper: #f1e9dc; /* linen */
-  --paper-2: #f8f3ea;
-  --ink: #1c1814;
+  --paper: #f7efe6; /* cream */
+  --paper-2: #fffaf3;
+  --ink: #17140f;
   --line: color-mix(in srgb, currentColor 16%, transparent);
   --soft: color-mix(in srgb, currentColor 68%, transparent);
-  --sand: #e4d5bb;
-  --plaster: #d8c9b2;
-  --taupe: #8a7a68;
-  --honey: #c58f4e; /* rattan, honey wood */
-  --tile: #2d4a66; /* Adriatic blue of the cement tiles */
-  --terra: #b5573a;
-  --thread: linear-gradient(90deg, var(--tile), var(--honey), var(--terra), var(--tile));
-  --serif: "Fraunces", "Times New Roman", serif;
-  --sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
-  --mono: "DM Mono", ui-monospace, "SF Mono", monospace;
+  --blush: #efc9be;
+  --blush-2: #f7e1d8;
+  --sage: #9ca58f;
+  --sage-deep: #566049;
+  --terra: #c8613a;
+  --terra-deep: #a4472a; /* AA with cream text */
+  --apricot: #f0b070; /* sparing accent */
+  --thread: conic-gradient(from var(--turn), var(--terra), var(--apricot), var(--sage), var(--blush), var(--terra));
+  --display: "Bricolage Grotesque", "Arial Rounded MT Bold", system-ui, sans-serif;
+  /* legacy name kept for booking.css / admin.css: it holds the display sans, this identity has no serif */
+  --serif: var(--display);
+  --sans: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: var(--sans);
   --ease: cubic-bezier(0.19, 1, 0.22, 1);
   --gutter: clamp(16px, 2.6vw, 40px);
-  --nav-h: 72px;
+  --nav-h: 84px;
+  --r-lg: 32px;
+  --r-md: 22px;
+  --r-sm: 16px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { background: var(--paper); -webkit-text-size-adjust: 100%; }
+html { background: var(--paper); -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h); }
 body {
-  margin: 0; overflow-x: clip; background: var(--paper); color: var(--ink);
-  font: 400 clamp(15px, 1.05vw, 17px) / 1.55 var(--sans); -webkit-font-smoothing: antialiased;
+  position: relative; margin: 0; overflow-x: clip; color: var(--ink);
+  font: 400 clamp(16px, 1.1vw, 18px) / 1.55 var(--sans); -webkit-font-smoothing: antialiased;
 }
-img { display: block; max-width: 100%; height: auto; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
 figure { margin: 0; }
 a { color: inherit; }
-::selection { background: var(--honey); color: var(--ink); }
-:focus-visible { outline: 2px solid var(--tile); outline-offset: 3px; border-radius: 4px; }
-.on-dark :focus-visible, .nav--over :focus-visible { outline-color: var(--paper); }
+::selection { background: var(--blush); color: var(--ink); }
+:focus-visible { outline: 3px solid var(--terra-deep); outline-offset: 3px; border-radius: 6px; }
+.on-dark :focus-visible, .footer :focus-visible { outline-color: var(--paper); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.skip { position: fixed; top: 8px; left: 8px; z-index: 200; padding: 10px 16px; border-radius: 99px; background: var(--ink); color: var(--paper); transform: translateY(-200%); }
+.skip { position: fixed; top: 10px; left: 10px; z-index: 200; padding: 12px 20px; border-radius: 99px; background: var(--ink); color: var(--paper-2); transform: translateY(-200%); }
 .skip:focus { transform: none; }
 
-.eyebrow { margin: 0; font: 500 12px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
-.mono { font-family: var(--mono); font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
-.display { margin: 0; font: 400 clamp(44px, 7.4vw, 120px) / 0.94 var(--serif); letter-spacing: -0.02em; }
-.display em { font-style: italic; }
+.eyebrow { display: inline-flex; align-items: center; gap: 0.7em; margin: 0; font: 700 12px/1.4 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; }
+.eyebrow::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--terra); }
+.mono { font-family: var(--mono); font-size: 0.82em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.display { margin: 0; font: 800 clamp(44px, 7.4vw, 120px) / 0.92 var(--display); letter-spacing: -0.028em; text-wrap: balance; }
+.display em { font-style: normal; color: var(--terra-deep); }
 
-/* the thread: a thin line in the tile blue, rattan and terracotta of the rooms, used for progress and accents */
-.thread { display: block; height: 2px; background: var(--thread); background-size: 200% 100%; animation: thread 8s linear infinite; }
-@keyframes thread { to { background-position: -200% 0; } }
-@keyframes thread-border { to { background-position: 0 0, -200% 0; } }
+/* the thread: a line of round dots in the room colours, used for accents (the nav progress bar overrides it) */
+.thread { display: block; height: 6px; background: radial-gradient(circle at 5px 3px, var(--terra) 0 2.4px, transparent 2.9px) 0 0 / 10px 6px repeat-x; animation: thread 1.6s linear infinite; }
+@keyframes thread { to { background-position: 10px 0; } }
+@keyframes turn { to { --turn: 360deg; } }
 
-/* ---------- buttons */
+/* ---------- buttons: always pills */
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.6em; min-height: 46px; padding: 0.95em 1.45em;
-  border: 0; border-radius: 99px; background: var(--ink); color: var(--paper);
-  font: 500 15px/1 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer;
-  transition: transform 0.5s var(--ease), background-color 0.3s, color 0.3s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6em; min-height: 48px; padding: 0.95em 1.5em;
+  border: 0; border-radius: 99px; background: var(--ink); color: var(--paper-2);
+  font: 600 15px/1 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: transform 0.5s var(--ease), background-color 0.3s, color 0.3s, box-shadow 0.3s;
 }
-.btn:hover { transform: translateY(-2px); }
+.btn:hover { background: var(--terra-deep); transform: translateY(-2px); }
 .btn span { transition: transform 0.5s var(--ease); }
 .btn:hover span { transform: translateX(4px); }
-.btn--light { background: var(--paper); color: var(--ink); }
-.btn--ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; }
-.btn--sm { min-height: 40px; padding: 0.75em 1.2em; font-size: 14px; }
-.btn--xl { padding: 1.2em 2.1em; font-size: 18px; }
+.btn--light { background: var(--paper-2); color: var(--ink); }
+.btn--light:hover { background: var(--blush); color: var(--ink); }
+.btn--ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1.5px currentColor; }
+.btn--ghost:hover { background: var(--ink); color: var(--paper-2); }
+.btn--sm { min-height: 44px; padding: 0.75em 1.2em; font-size: 14px; }
+.btn--xl { min-height: 60px; padding: 1.2em 2.1em; font-size: 18px; }
 .btn--thread {
-  border: 2px solid transparent; background: linear-gradient(var(--ink), var(--ink)) padding-box, var(--thread) border-box;
-  background-size: auto, 200% 100%; animation: thread-border 8s linear infinite;
+  border: 2.5px solid transparent; background: linear-gradient(var(--ink), var(--ink)) padding-box, var(--thread) border-box;
+  animation: turn 6s linear infinite;
 }
+.btn--thread:hover { background: linear-gradient(var(--terra-deep), var(--terra-deep)) padding-box, var(--thread) border-box; }
 
-/* ---------- nav */
+/* ---------- nav: a floating capsule */
 .nav {
-  position: fixed; inset: 0 0 auto; z-index: 50; height: var(--nav-h); display: flex; align-items: center; gap: 24px; padding: 0 var(--gutter);
-  transition: transform 0.6s var(--ease), background-color 0.4s, color 0.4s;
+  position: fixed; inset: 12px max(var(--gutter), calc((100vw - 1360px) / 2)) auto; z-index: 50; height: 60px;
+  display: flex; align-items: center; gap: 18px; padding: 0 8px 0 22px; border-radius: 99px;
+  background: color-mix(in srgb, var(--paper-2) 94%, transparent); /* no backdrop blur: it repaints on every scroll frame */
+  box-shadow: 0 0 0 1px var(--line), 0 14px 34px -20px rgb(23 20 15 / 0.45); transition: transform 0.6s var(--ease);
 }
-.nav.is-scrolled { background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); }
-.nav.is-hidden:not(:focus-within) { transform: translateY(-100%); }
-.nav--over:not(.is-scrolled) { color: var(--paper); }
-.nav__progress { position: absolute; inset: auto 0 0; transform: scaleX(var(--p, 0)); transform-origin: left; }
-.nav__logo { display: flex; align-items: baseline; gap: 8px; margin-right: auto; font: 500 28px/1 var(--serif); letter-spacing: -0.01em; text-decoration: none; }
-.nav__num { font-style: italic; font-weight: 400; color: var(--terra); }
-.nav--over:not(.is-scrolled) .nav__num { color: var(--honey); }
-.nav__logo small { margin-left: 4px; font: 500 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
-.nav__links { display: flex; gap: 26px; font-size: 14px; }
-.nav__links a { position: relative; padding: 6px 0; text-decoration: none; }
-.nav__links a::after { content: ""; position: absolute; inset: auto 0 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease); }
-.nav__links a:hover::after { transform: scaleX(1); transform-origin: left; }
-.nav__burger { display: none; min-height: 44px; padding: 0 18px; border: 1px solid currentColor; border-radius: 99px; background: transparent; color: inherit; font: 500 14px/1 var(--sans); cursor: pointer; }
+.nav.is-hidden:not(:focus-within) { transform: translateY(-160%); }
+.nav__progress { position: absolute; inset: auto 30px 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--terra); animation: none; transform: scaleX(var(--p, 0)); transform-origin: left; }
+.nav__logo { display: flex; align-items: center; margin-right: auto; font: 800 25px/1 var(--display); letter-spacing: -0.045em; text-decoration: none; }
+.nav__logo::before { content: ""; flex: none; width: 30px; height: 30px; margin-right: 10px; border-radius: 50%; background: radial-gradient(circle, var(--paper-2) 0 28%, transparent 29%), var(--terra); }
+.nav__num { color: var(--terra-deep); }
+.nav__logo small { margin-left: 12px; padding: 4px 9px; border-radius: 99px; box-shadow: inset 0 0 0 1px var(--line); font: 700 10px/1 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; }
+.nav__links { display: flex; gap: 2px; font-size: 14px; font-weight: 500; }
+.nav__links a { padding: 10px 14px; border-radius: 99px; text-decoration: none; transition: background-color 0.3s; }
+.nav__links a:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.nav__burger { display: none; min-height: 44px; padding: 0 20px; border: 0; border-radius: 99px; background: var(--ink); color: var(--paper-2); font: 600 14px/1 var(--sans); cursor: pointer; }
 .lang { margin-right: 0; }
 
-.menu { position: fixed; inset: 0; z-index: 45; display: flex; align-items: flex-end; padding: calc(var(--nav-h) + 24px) var(--gutter) 48px; background: var(--ink); color: var(--paper); }
+.menu { position: fixed; inset: 0; z-index: 45; display: flex; align-items: flex-end; padding: calc(var(--nav-h) + 24px) var(--gutter) 48px; background: var(--blush); color: var(--ink); }
 .menu[hidden] { display: none; }
-.menu nav { display: flex; flex-direction: column; gap: 6px; }
-.menu a { font: 400 clamp(40px, 11vw, 76px) / 1.05 var(--serif); text-decoration: none; }
-.menu .menu__book { margin-top: 24px; font: 500 18px/1 var(--sans); }
-body.menu-open .nav { color: var(--paper); background: transparent; backdrop-filter: none; }
+.menu nav { display: flex; flex-direction: column; gap: 4px; }
+.menu a { font: 800 clamp(40px, 11vw, 76px) / 1.05 var(--display); letter-spacing: -0.04em; text-decoration: none; }
+.menu .menu__book { align-self: flex-start; margin-top: 24px; font: 600 18px/1 var(--sans); letter-spacing: 0; }
+body.menu-open { overflow: hidden; }
 .mobile-book { display: none; }
 
-.api-error { margin: 0 0 24px; padding: 14px 18px; border-radius: 14px; background: color-mix(in srgb, #b42318 12%, var(--paper-2)); color: #7a1a12; font-size: 15px; }
+.api-error { margin: 0 0 24px; padding: 14px 20px; border-radius: var(--r-md); background: color-mix(in srgb, #b42318 12%, var(--paper-2)); color: #7a1a12; font-size: 15px; }
 .api-error[hidden] { display: none; }
 
 /* ---------- footer */
-.footer { padding: 8vh var(--gutter) 28px; background: var(--ink); color: var(--paper); }
+.footer { padding: 9vh var(--gutter) 28px; border-radius: 56px 56px 0 0; background: var(--ink); color: var(--paper); }
 .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 24px; border-top: 1px solid color-mix(in srgb, var(--paper) 22%, transparent); font-size: 12px; }
 .footer--slim { padding: 24px var(--gutter); }
 .footer--slim .footer__bottom { padding-top: 0; border-top: 0; }
 
+@media (max-width: 560px) {
+  .nav { gap: 10px; padding-left: 16px; }
+  .nav__logo { font-size: 22px; }
+  .nav__logo::before { width: 26px; height: 26px; margin-right: 8px; }
+  .nav__logo small { display: none; }
+  .nav .lang { padding-inline: 12px; }
+  .nav__burger { padding-inline: 16px; }
+}
 @media (max-width: 900px) {
   .nav__links { display: none; }
   .nav__burger { display: inline-flex; align-items: center; }
-  .nav .btn--sm { display: none; }
+  .nav > .btn--sm:not(.lang) { display: none; }
+  .footer { border-radius: 36px 36px 0 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .thread, .btn--thread { animation: none; }
-  .btn, .btn span, .nav__links a::after { transition: none; }
+  .btn, .btn span, .nav, .nav__links a { transition: none; }
 }

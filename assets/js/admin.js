@@ -22,12 +22,12 @@ function h(tag, props = {}, ...children) {
   el.append(...children.filter((c) => c !== null && c !== undefined && c !== false));
   return el;
 }
-const roomVars = (room) => ({ "--room": room.color, "--room-fg": room.dark ? "#f8f3ea" : "#1c1814" });
+const roomVars = (room) => ({ "--room": room.color, "--room-fg": room.dark ? "#fffaf3" : "#17140f" });
 const isDirect = (b) => b.channel === CHANNEL_DIRECT;
 const initials = (name) => name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 const CHANNEL_CODE = { [CHANNEL_BOOKING]: "BKG", [CHANNEL_PHONE]: "TEL", [CHANNEL_DIRECT]: "WEB" };
 const KIND_LABEL = {
-  booking_confirmed: "Conferma", pre_arrival: "Istruzioni, 2 giorni prima", checkin_day: "Giorno dell'arrivo",
+  booking_confirmed: "Conferma", pre_arrival: "Istruzioni e codice porta, 2 giorni prima", checkin_day: "Giorno dell'arrivo",
   checkout_thanks: "Grazie e recensione", host_new_booking: "Avviso al gestore", host_conflict: "Doppia prenotazione",
 };
 const STATUS_LABEL = { sent: "inviato", scheduled: "programmato", cancelled: "annullato", failed: "non inviato" };

@@ -1,0 +1,112 @@
+/* Tuttotondo home: every scroll-driven scene. Native CSS scroll and view timelines are the engine (no animation library).
+   Only browsers that support them, for visitors who did not ask for reduced motion, get the scenes: everyone else sees the
+   end state from home.css. Only transform, opacity and clip-path move (plus stroke-dashoffset on a few small SVG arcs),
+   so the whole page stays on the compositor and holds 60 fps. Scroll position is the only clock, except the slow idle
+   spin of the orbit text, which is a plain CSS animation. */
+
+@keyframes rise { from { opacity: 0; transform: translateY(40px); } }
+@keyframes pop { from { opacity: 0; transform: scale(0.45); } }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* ---------- generic */
+    .sec-head > *, .quote, .steps4 li, .walk__note, .info__col, .faq, .vs__controls, .vs__facts, .rings__legend {
+      animation: rise linear both; animation-timeline: view(); animation-range: entry 4% entry 52%;
+    }
+    .fact { animation: pop linear both; animation-timeline: view(); animation-range: entry calc(var(--n, 0) * 5%) entry calc(60% + var(--n, 0) * 5%); }
+    .nav__progress { animation: grow linear both; animation-timeline: scroll(root); }
+    @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* ---------- a) hero: the photo grows out of the "o" of "tondo" while the stage stays pinned */
+    .hero { height: 270svh; view-timeline: --hero block; }
+    .hero__stage { position: sticky; top: 0; }
+    .hero__photo { animation: hero-open cubic-bezier(0.55, 0, 0.8, 0.6) both; animation-timeline: --hero; animation-range: contain 0% contain 64%; will-change: clip-path; }
+    .hero__photo img { animation: hero-settle linear both; animation-timeline: --hero; animation-range: contain 0% contain 80%; }
+    .orbit__spin { animation: spin linear both; animation-timeline: scroll(root); animation-range: 0px 270svh; }
+    .orbit__idle { animation: idle 30s linear infinite; }
+    .hero__lead { animation: rise linear both; animation-timeline: --hero; animation-range: contain 36% contain 64%; }
+    @keyframes hero-open {
+      from { clip-path: circle(var(--r0) at var(--cx) var(--cy)); }
+      to { clip-path: circle(var(--r1) at var(--cx) var(--cy)); }
+    }
+    @keyframes hero-settle { from { transform: scale(1.35); } to { transform: scale(1); } }
+    @keyframes spin { to { transform: rotate(720deg); } }
+    @keyframes idle { to { transform: rotate(360deg); } }
+
+    /* ---------- b) walkthrough: five messages, one pinned phone, a ring that fills as the story moves */
+    .walk__track { height: 560svh; view-timeline: --walk block; }
+    .walk__stage { position: sticky; top: 0; height: 100svh; padding: calc(var(--nav-h) + 12px) 0 20px; align-items: center; grid-template-rows: minmax(0, 1fr); }
+    .walk__steps { display: grid; align-self: center; }
+    .walk__step { grid-area: 1 / 1; animation: step-mid linear both; animation-timeline: --walk; animation-range: contain calc(var(--i) * 20% + 0.5%) contain calc(var(--i) * 20% + 19.5%); }
+    .walk__step:first-child { animation-name: step-first; animation-range: contain 0% contain 19.5%; }
+    .walk__step:last-child { animation-name: step-last; }
+    .walk__device { align-self: stretch; height: 100%; max-height: 700px; }
+    .phone { height: 100%; }
+    .walk__device::before { animation: disc-in linear both; animation-timeline: --walk; animation-range: contain 0% contain 12%; }
+    .walk__ring { display: block; }
+    .walk__ring-fill { stroke-dasharray: 1; animation: ring-fill linear both; animation-timeline: --walk; animation-range: contain 0% contain 100%; }
+    .chat { overflow: hidden; }
+    .chat__list { animation: chat-scroll linear both; animation-timeline: --walk; animation-range: contain 0% contain 100%; }
+    .msg { transform-origin: 0 100%; animation: msg-in cubic-bezier(0.2, 0.7, 0.3, 1) both; animation-timeline: --walk; animation-range: contain calc(var(--i) * 20% + 2%) contain calc(var(--i) * 20% + 11%); }
+    .msg--out { transform-origin: 100% 100%; }
+    .ticks { position: relative; display: inline-block; }
+    .ticks::after { content: "✓✓"; position: absolute; left: 0; color: #2f8fc8; animation: fade-in linear both; animation-timeline: --walk; animation-range: contain 66% contain 70%; }
+    /* each caption fades in over 3% of the scroll, holds, and is gone before the next one starts */
+    @keyframes step-mid { 0% { opacity: 0; transform: translateY(26px); } 15%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-26px); } }
+    @keyframes step-first { 0%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-26px); } }
+    @keyframes step-last { 0% { opacity: 0; transform: translateY(26px); } 15%, 100% { opacity: 1; transform: none; } }
+    @media (max-width: 1000px) {
+      .walk__stage { grid-template-rows: auto minmax(0, 1fr); gap: 12px; }
+      .walk__ring { display: none; } /* on a phone-sized screen the ring would run through the caption */
+      .walk__step { grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
+      .walk__n { width: 44px; font-size: 17px; }
+      .walk__step h3 { font-size: 20px; }
+      .walk__step p { font-size: 15px; line-height: 1.4; }
+    }
+    @keyframes msg-in { from { opacity: 0; transform: translateY(22px) scale(0.94); } to { opacity: 1; transform: none; } }
+    @keyframes disc-in { from { opacity: 0; transform: scale(0.3); } }
+    @keyframes ring-fill { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    /* --y0…--y4 (px) are measured once by home-walk.js: how far the list must slide up so the newest message sits at the bottom */
+    @keyframes chat-scroll {
+      0%, 22% { transform: translateY(calc(var(--y0, 0px) * -1)); }
+      31%, 42% { transform: translateY(calc(var(--y1, 0px) * -1)); }
+      51%, 62% { transform: translateY(calc(var(--y2, 0px) * -1)); }
+      71%, 82% { transform: translateY(calc(var(--y3, 0px) * -1)); }
+      91%, 100% { transform: translateY(calc(var(--y4, 0px) * -1)); }
+    }
+
+    /* ---------- c) rooms: each disc opens like the hero circle */
+    .room__disc { animation: disc-open linear both; animation-timeline: view(); animation-range: entry 0% entry 62%; }
+    .room__badge { animation: pop linear both; animation-timeline: view(); animation-range: entry 40% entry 80%; }
+    .room__name, .room__type, .room__blurb, .room__price { animation: rise linear both; animation-timeline: view(); animation-range: entry 25% entry 80%; }
+    @keyframes disc-open { from { clip-path: circle(0% at 50% 50%); transform: scale(0.78); } to { clip-path: circle(75% at 50% 50%); transform: none; } }
+
+    /* ---------- d) direct vs portal */
+    .vs__chart { animation: pop linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+
+    /* ---------- e) reviews: the rings draw themselves as the chart enters */
+    .rings__chart { view-timeline: --rings block; }
+    .ring--fill { animation: ring-draw linear both; animation-timeline: --rings; animation-range: entry calc(var(--n, 0) * 4%) entry calc(70% + var(--n, 0) * 3%); }
+    .rings__center { animation: pop linear both; animation-timeline: --rings; animation-range: entry 10% entry 70%; }
+    @keyframes ring-draw { from { stroke-dashoffset: 100; } }
+
+    /* ---------- final call to action */
+    .final__disc { animation: pop-big linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
+    @keyframes pop-big { from { transform: scale(0.55); opacity: 0.4; } }
+  }
+}
+
+/* ---------- browsers without scroll timelines (Firefox for now): the same scenes as one-shot reveals,
+   switched on by home-motion.js with IntersectionObserver. Reduced motion never gets them. */
+@media (prefers-reduced-motion: no-preference) {
+  .no-sda:not(.calm) .hero__photo { clip-path: circle(var(--r0) at var(--cx) var(--cy)); transition: clip-path 1.8s var(--ease) 0.2s; }
+  .no-sda:not(.calm) .hero.is-open .hero__photo { clip-path: circle(var(--r1) at var(--cx) var(--cy)); }
+  .no-sda:not(.calm) [data-reveal] { opacity: 0; transform: translateY(32px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+  .no-sda:not(.calm) .fact[data-reveal], .no-sda:not(.calm) .final__disc[data-reveal] { transform: scale(0.6); }
+  .no-sda:not(.calm) [data-reveal].is-in { opacity: 1; transform: none; }
+  .no-sda:not(.calm) .room__disc[data-reveal] { clip-path: circle(0% at 50% 50%); }
+  .no-sda:not(.calm) .room__disc[data-reveal].is-in { clip-path: circle(75% at 50% 50%); }
+  .no-sda:not(.calm) .ring--fill { stroke-dashoffset: 100; transition: stroke-dashoffset 1.6s var(--ease) calc(var(--n, 0) * 90ms); }
+  .no-sda:not(.calm) .rings.is-in .ring--fill { stroke-dashoffset: calc(100 - var(--score) * 10); }
+}

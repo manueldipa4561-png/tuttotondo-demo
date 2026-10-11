@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuttotondo — Guest house a Pescara, tra stazione e mare</title>
+  <meta name="description" content="Tuttotondo, guest house a Pescara tra la stazione e il mare: cinque camere dalle forme morbide, prenotazione diretta senza commissioni e self check-in su WhatsApp.">
+  <meta name="theme-color" content="#efc9be">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+  <link rel="stylesheet" href="assets/css/home-motion.css">
+  <script>
+    // Feature flags for the CSS: "no-sda" = the browser has no scroll-driven animations (JS reveals sections instead),
+    // "calm" = the visitor asked for reduced motion (everything shows its end state).
+    const root = document.documentElement;
+    root.classList.add("js");
+    if (!CSS.supports("animation-timeline: view()")) root.classList.add("no-sda");
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) root.classList.add("calm");
+  </script>
+</head>
+<body class="page-home">
+  <a class="skip" href="#main" data-i18n="skip">Salta al contenuto</a>
+
+  <header class="nav" data-nav>
+    <span class="nav__progress" data-progress aria-hidden="true"></span>
+    <a class="nav__logo" href="#top" aria-label="Tuttotondo, Pescara">tutto<span class="nav__num">tondo</span><small>Pescara</small></a>
+    <nav class="nav__links" aria-label="Sezioni">
+      <a href="#come-funziona" data-i18n="navHow">Come funziona</a>
+      <a href="#camere" data-i18n="navRooms">Camere</a>
+      <a href="#confronto" data-i18n="navCompare">Diretto o portale</a>
+      <a href="#recensioni" data-i18n="navReviews">Recensioni</a>
+      <a href="#info" data-i18n="navInfo">Info</a>
+    </nav>
+    <button class="btn btn--ghost btn--sm lang" type="button" data-lang-toggle lang="en">English</button>
+    <a class="btn btn--sm" href="prenota.html" data-book-link><span data-i18n="navBook">Prenota</span></a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu" data-open="Menu" data-close="Chiudi">Menu</button>
+  </header>
+
+  <div class="menu" id="menu" hidden>
+    <nav aria-label="Menu">
+      <a href="#come-funziona" data-i18n="navHow">Come funziona</a>
+      <a href="#camere" data-i18n="navRooms">Camere</a>
+      <a href="#confronto" data-i18n="navCompare">Diretto o portale</a>
+      <a href="#recensioni" data-i18n="navReviews">Recensioni</a>
+      <a href="#info" data-i18n="navInfo">Info</a>
+      <a class="btn btn--xl menu__book" href="prenota.html" data-book-link><span data-i18n="navBook">Prenota</span> <span aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+
+  <a class="mobile-book" href="prenota.html" data-book-link data-mobile-book data-i18n="navBook">Prenota</a>
+
+  <main id="main">
+    <!-- a) HERO: a circle grows out of the "o" of "tondo" and reveals the room -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__stage" data-hero>
+        <figure class="hero__photo">
+          <img src="assets/img/hero-1600.jpg" srcset="assets/img/hero-800.jpg 800w, assets/img/hero-1600.jpg 1600w, assets/img/hero-full.jpg 2048w" sizes="100vw"
+               width="2048" height="1360" fetchpriority="high" alt="Immagine concettuale: camera con testiera ad arco color salvia, parete rosa, specchio tondo e plaid terracotta." data-i18n-alt="heroAlt">
+          <figcaption class="hero__credit mono" data-i18n="concept">Immagine concettuale</figcaption>
+        </figure>
+        <h1 class="hero__word" id="hero-title" aria-label="tutto tondo">
+          <span class="hero__line" aria-hidden="true">tutto</span>
+          <span class="hero__line" aria-hidden="true">t<span class="hero__o" data-portal><i class="hero__base"></i>o</span>ndo</span>
+        </h1>
+        <a class="orbit" href="prenota.html" data-book-link aria-label="Prenota diretto" data-i18n-aria="orbitLabel">
+          <span class="orbit__spin"><span class="orbit__idle">
+            <svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+              <path id="orbit-path" d="M100 100m-74 0a74 74 0 1 1 148 0a74 74 0 1 1-148 0" fill="none"/>
+              <text><textPath href="#orbit-path" textLength="458" lengthAdjust="spacing" data-i18n="orbitText">prenota diretto · senza commissioni · </textPath></text>
+            </svg>
+          </span></span>
+          <span class="orbit__arrow" aria-hidden="true">↗</span>
+        </a>
+        <p class="hero__lead" data-i18n-html="heroLead">Camere dalle forme morbide a due passi da stazione e mare. Prenoti diretto, entri da solo: <b>la reception è nel tuo telefono.</b></p>
+        <form class="quick" action="prenota.html" method="get" data-quick aria-label="Verifica disponibilità" data-i18n-aria="quickLabel">
+          <input type="hidden" name="lang" value="it" data-lang-field>
+          <div class="quick__field"><label for="q-in" data-i18n="qIn">Arrivo</label><input id="q-in" name="arrivo" type="date" required></div>
+          <div class="quick__field"><label for="q-out" data-i18n="qOut">Partenza</label><input id="q-out" name="partenza" type="date" required></div>
+          <div class="quick__field"><label for="q-guests" data-i18n="qGuests">Ospiti</label><select id="q-guests" name="adulti" data-guests><option value="2">2</option></select></div>
+          <button class="btn btn--thread quick__go" type="submit"><span data-i18n="qGo">Verifica disponibilità</span> <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+    </section>
+
+    <!-- round facts, numbers come from data.js -->
+    <section class="facts" aria-label="In breve" data-i18n-aria="factsLabel">
+      <ul class="facts__list" data-facts></ul>
+    </section>
+
+    <!-- b) WALKTHROUGH: a WhatsApp conversation plays out while you scroll -->
+    <section class="walk" id="come-funziona" aria-labelledby="walk-title">
+      <header class="walk__head wrap">
+        <p class="eyebrow" data-i18n="walkEyebrow">Self check-in</p>
+        <h2 class="display walk__title" id="walk-title" data-i18n-html="walkTitle">La reception è <em>nel tuo telefono.</em></h2>
+        <p class="walk__intro" data-i18n="walkIntro">Tuttotondo non ha reception né aree comuni, quindi l'arrivo è pensato come una conversazione su WhatsApp. Scorri e guarda cosa succede, dal momento in cui prenoti.</p>
+      </header>
+
+      <div class="walk__track" data-walk>
+        <div class="walk__stage">
+          <ol class="walk__steps">
+            <li class="walk__step" style="--i:0"><span class="walk__n" aria-hidden="true">1</span><div><h3 data-i18n="s1h">Prenoti, e subito ti scriviamo</h3><p data-i18n="s1p">Appena confermi, arriva su WhatsApp il riepilogo con camera e date. È un messaggio automatico, con un modello approvato da Meta.</p></div></li>
+            <li class="walk__step" style="--i:1"><span class="walk__n" aria-hidden="true">2</span><div><h3 data-i18n="s2h">Due giorni prima: istruzioni e codice porta</h3><p data-i18n="s2p">Ti diciamo come arrivare e ti mandiamo il codice della porta. La mattina dell'arrivo un promemoria ti ripete tutto.</p></div></li>
+            <li class="walk__step" style="--i:2"><span class="walk__n" aria-hidden="true">3</span><div><h3 data-i18n="s3h">Arrivi e scrivi «sono qui»</h3><p data-i18n="s3p">Il check-in va dalle 15:00 a mezzanotte e non c'è nessuno al bancone: entri da solo. Se ti serve aiuto, ci trovi su WhatsApp o al telefono.</p></div></li>
+            <li class="walk__step" style="--i:3"><span class="walk__n" aria-hidden="true">4</span><div><h3 data-i18n="s4h">«La camera è pronta»</h3><p data-i18n="s4p">La risposta dell'host è un messaggio libero: dentro le 24 ore dal tuo «sono qui» non serve nessun modello. Le spunte diventano blu quando leggiamo.</p></div></li>
+            <li class="walk__step" style="--i:4"><span class="walk__n" aria-hidden="true">5</span><div><h3 data-i18n="s5h">Dopo il check-out: grazie e recensione</h3><p data-i18n="s5p">Alle 11:30 del giorno di partenza arriva un ringraziamento con il link per la recensione.</p></div></li>
+          </ol>
+
+          <div class="walk__device">
+            <svg class="walk__ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <circle class="walk__ring-track" cx="50" cy="50" r="48"/>
+              <circle class="walk__ring-fill" cx="50" cy="50" r="48" pathLength="1"/>
+            </svg>
+            <div class="phone" role="group" aria-label="Esempio di conversazione WhatsApp" data-i18n-aria="phoneLabel">
+              <div class="phone__screen">
+                <div class="phone__bar">
+                  <span class="phone__avatar" aria-hidden="true"></span>
+                  <span class="phone__who"><b>Tuttotondo</b><small data-i18n="phoneStatus">account aziendale</small></span>
+                </div>
+                <div class="chat" data-chat>
+                  <ol class="chat__list">
+                    <li class="msg" style="--i:0">
+                      <p class="chat__day" data-i18n="d1">9 nov</p>
+                      <div class="chat__bubble"><p data-i18n="m1">Ciao Giulia, la tua prenotazione TTD-K7M2 a Tuttotondo è confermata: Large Double, arrivo venerdì 20 novembre, partenza domenica 22 novembre. Check-in autonomo 15:00–24:00. Due giorni prima dell'arrivo ti scriviamo qui con le istruzioni e il codice della porta.</p><span class="chat__time">12:04</span></div>
+                    </li>
+                    <li class="msg" style="--i:1">
+                      <p class="chat__day" data-i18n="d2">18 nov</p>
+                      <div class="chat__bubble"><p><span data-i18n="m2a">Ciao Giulia, manca poco! Ti aspettiamo da Tuttotondo, Corso Vittorio Emanuele II 129, Pescara. Check-in 15:00–24:00. Non c'è reception: l'ingresso è autonomo, ma se ti serve qualcosa ci trovi qui su WhatsApp o al telefono. Il tuo codice porta è</span> <span class="doorcode" data-door-code="4821" role="text" aria-label="4 8 2 1"><b>4</b><b>8</b><b>2</b><b>1</b></span><span data-i18n="m2b">. Rispondi con il tuo orario di arrivo. A presto!</span></p><span class="chat__time">10:00</span></div>
+                      <p class="chat__demo" data-i18n="codeDemo">codice di esempio</p>
+                    </li>
+                    <li class="msg msg--out" style="--i:2">
+                      <p class="chat__day" data-i18n="d3">20 nov</p>
+                      <div class="chat__bubble"><p data-i18n="m3">Sono qui, davanti alla porta!</p><span class="chat__time">16:42 <span class="ticks" aria-hidden="true">✓✓</span></span></div>
+                    </li>
+                    <li class="msg" style="--i:3">
+                      <div class="chat__bubble"><p data-i18n="m4">Benvenuta da Tuttotondo, Giulia! La camera è pronta e il codice funziona. Se ti serve qualcosa, scrivici qui.</p><span class="chat__time">16:43</span></div>
+                    </li>
+                    <li class="msg" style="--i:4">
+                      <p class="chat__day" data-i18n="d4">22 nov</p>
+                      <div class="chat__bubble"><p><span data-i18n="m5a">Grazie Giulia, è stato un piacere averti da Tuttotondo! Se il soggiorno ti è piaciuto, una recensione ci aiuta molto:</span> <span class="chat__link" data-i18n="m5link">link alla recensione</span><span data-i18n="m5b">. La prossima volta prenota direttamente dal nostro sito.</span></p><span class="chat__time">11:30</span></div>
+                    </li>
+                  </ol>
+                </div>
+                <div class="phone__input" aria-hidden="true"><span data-i18n="phoneInput">Scrivi un messaggio</span><i></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="walk__note wrap" data-i18n="walkNote">Conversazione di esempio: nome, date e codice porta sono dimostrativi. Nella versione reale il codice arriva dalla serratura smart.</p>
+    </section>
+
+    <!-- c) ROOMS: five round tokens, concept images with different crops -->
+    <section class="rooms" id="camere" aria-labelledby="rooms-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow" data-i18n="roomsEyebrow">Le camere</p>
+          <h2 class="display" id="rooms-title" data-i18n-html="roomsTitle">Cinque camere, <em>un'idea sola.</em></h2>
+          <p class="sec-head__p" data-i18n="roomsIntro">Le cinque tipologie di Booking.com, una camera ciascuna. Tutte hanno aria condizionata, bagno privato, TV, Wi-Fi gratuito, scrivania, zanzariera, accappatoi e prodotti da bagno; alcune hanno terrazzo o balcone, cucinotto, minibar o vista sulla città: chiedi quando prenoti.</p>
+        </header>
+        <ul class="rooms__grid" data-rooms></ul>
+        <p class="note" data-i18n="roomsNote">Immagini concettuali generate con AI: non sono le foto reali delle camere. Tariffe di esempio.</p>
+      </div>
+    </section>
+
+    <!-- d) DIRECT VS PORTAL: two circles whose area follows the price -->
+    <section class="vs" id="confronto" aria-labelledby="vs-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow" data-i18n="vsEyebrow">Diretto o portale</p>
+          <h2 class="display" id="vs-title" data-i18n-html="vsTitle">Due cerchi, <em>stessa camera.</em></h2>
+          <p class="sec-head__p" data-i18n="vsIntro">Il cerchio grande è il prezzo stimato sui portali, quello scuro è il prezzo diretto. La differenza è la commissione che la struttura non paga e che ti restituisce: circa il 10% in meno (proposta demo).</p>
+        </header>
+        <div class="vs__panel" data-vs>
+          <div class="vs__controls">
+            <div class="vs__control"><label for="vs-room" data-i18n="vsRoom">Camera</label><select id="vs-room" data-vs-room></select></div>
+            <div class="vs__control"><label for="vs-nights"><span data-i18n="vsNights">Notti</span>: <output for="vs-nights" data-vs-nights-out>7</output></label><input id="vs-nights" type="range" min="1" max="14" value="7" data-vs-nights></div>
+          </div>
+          <figure class="vs__chart" aria-hidden="true">
+            <span class="vs__circle vs__circle--portal" data-vs-portal-circle></span>
+            <span class="vs__circle vs__circle--direct" data-vs-direct-circle></span>
+          </figure>
+          <dl class="vs__facts" aria-live="polite">
+            <div class="vs__fact vs__fact--portal"><dt data-i18n="vsPortal">Sui portali (stima)</dt><dd data-vs-portal>—</dd></div>
+            <div class="vs__fact vs__fact--direct"><dt data-i18n="vsDirect">Diretto, da noi</dt><dd data-vs-direct>—</dd></div>
+            <div class="vs__fact vs__fact--save"><dt data-i18n="vsSave">Risparmi</dt><dd data-vs-save>—</dd></div>
+          </dl>
+        </div>
+        <p class="note" data-vs-note></p>
+      </div>
+    </section>
+
+    <!-- e) REVIEWS: concentric score rings and the guests' own words -->
+    <section class="reviews" id="recensioni" aria-labelledby="rev-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow" data-i18n="revEyebrow">Cosa dicono gli ospiti</p>
+          <h2 class="display" id="rev-title" data-i18n-html="revTitle">Il punteggio <em>in cerchio.</em></h2>
+          <p class="sec-head__p" data-i18n="revIntro">Il punto più debole è il rapporto qualità-prezzo: per questo il sito propone un prezzo diretto più basso. La posizione e la facilità dell'arrivo sono ciò che gli ospiti ricordano di più.</p>
+        </header>
+        <div class="reviews__body">
+          <figure class="rings" data-rings></figure>
+          <ul class="quotes" data-quotes></ul>
+        </div>
+        <p class="note" data-rev-note></p>
+      </div>
+    </section>
+
+    <!-- f) PRACTICAL INFO -->
+    <section class="info" id="info" aria-labelledby="info-title">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow" data-i18n="infoEyebrow">Prima di partire</p>
+          <h2 class="display" id="info-title" data-i18n-html="infoTitle">Quello che <em>serve sapere.</em></h2>
+        </header>
+
+        <ol class="steps4">
+          <li><span class="steps4__n" aria-hidden="true">1</span><h3 data-i18n="c1h">Prenoti</h3><p data-i18n="c1p">Direttamente sul sito, senza commissioni.</p></li>
+          <li><span class="steps4__n" aria-hidden="true">2</span><h3 data-i18n="c2h">Ricevi il codice</h3><p data-i18n="c2p">Due giorni prima, su WhatsApp, con le istruzioni.</p></li>
+          <li><span class="steps4__n" aria-hidden="true">3</span><h3 data-i18n="c3h">Entri da solo</h3><p data-i18n="c3p">Dalle 15:00 a mezzanotte, senza reception.</p></li>
+          <li><span class="steps4__n" aria-hidden="true">4</span><h3 data-i18n="c4h">Scrivici se serve</h3><p data-i18n="c4p">Rispondiamo su WhatsApp o al telefono.</p></li>
+        </ol>
+
+        <div class="info__cols">
+          <div class="info__col">
+            <h3 class="info__h" data-i18n="timesH">Orari e regole</h3>
+            <ul class="chips" data-chips></ul>
+            <h3 class="info__h" data-i18n="missingH">Cosa non c'è</h3>
+            <p data-i18n="missingP">Niente colazione, niente reception, niente aree comuni; il bollitore non c'è in tutte le camere. In compenso: arrivo autonomo fino a mezzanotte, Wi-Fi gratuito e camere che gli ospiti descrivono silenziose.</p>
+          </div>
+          <div class="info__col">
+            <h3 class="info__h" data-i18n="whereH">Tra la stazione e il mare</h3>
+            <p class="info__addr" data-address></p>
+            <ul class="chips chips--near" data-near></ul>
+            <a class="btn btn--ghost" href="#" data-maps target="_blank" rel="noopener"><span data-i18n="mapsBtn">Apri su Google Maps</span> <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+
+        <div class="faq" data-faq>
+          <h3 class="info__h" data-i18n="faqH">Domande frequenti</h3>
+          <details><summary data-i18n="q1">Come funziona il check-in senza reception?</summary><p data-i18n="a1">Due giorni prima ti scriviamo su WhatsApp con le istruzioni e il codice della porta. Puoi arrivare dalle 15:00 a mezzanotte ed entrare da solo; se ti serve aiuto ci trovi al telefono o su WhatsApp.</p></details>
+          <details><summary data-i18n="q2">E se arrivo tardi?</summary><p data-i18n="a2">Il check-in è dalle 15:00 alle 24:00, il check-out entro le 10:00. Se pensi di arrivare dopo mezzanotte, scrivici su WhatsApp prima di partire.</p></details>
+          <details><summary data-i18n="q3">C'è la colazione?</summary><p data-i18n="a3">No. C'è una macchina del caffè a disposizione e alcune camere hanno il cucinotto; il bollitore non c'è in tutte le camere.</p></details>
+          <details><summary data-i18n="q4">Animali, fumo, feste?</summary><p data-i18n="a4">Gli animali non sono ammessi, non si fuma e non si organizzano feste.</p></details>
+          <details><summary data-i18n="q5">Avete la culla o letti aggiunti?</summary><p data-i18n="a5">La culla costa 15 € a bambino a notte, da 0 a 3 anni. Non sono disponibili letti aggiunti.</p></details>
+          <details><summary data-i18n="q6">Dove parcheggio?</summary><p data-i18n="a6">C'è un parcheggio a circa 300 metri, a circa 2,50 € al giorno (informazione da confermare).</p></details>
+          <details><summary data-i18n="q7">Come si paga?</summary><p data-i18n="a7">Online non si paga. Puoi pagare in struttura, in contanti e da concordare con l'host, oppure con bonifico anticipato (proposta demo).</p></details>
+          <details><summary data-i18n="q8">Posso cancellare?</summary><p data-i18n="a8">Gratuitamente fino a 48 ore prima dell'arrivo (proposta demo, da confermare).</p></details>
+          <details><summary data-i18n="q9">Perché prenotare diretto?</summary><p data-i18n="a9">Nessuna commissione per la struttura, quindi un prezzo più basso (proposta demo: circa il 10% in meno rispetto ai portali), conferma immediata e il codice porta direttamente su WhatsApp.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- final call to action -->
+    <section class="final" aria-labelledby="final-title" data-final>
+      <div class="final__disc">
+        <h2 class="display final__title" id="final-title" data-i18n-html="finalTitle">Pronto per una <em>camera tonda?</em></h2>
+        <p class="final__p" data-i18n="finalP">Nessuna commissione, conferma immediata, reception nel telefono.</p>
+        <a class="btn btn--xl btn--light" href="prenota.html" data-book-link><span data-i18n="finalBtn">Prenota diretto</span> <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer on-dark">
+    <div class="footer__grid wrap">
+      <div>
+        <p class="footer__brand">tutto<span class="nav__num">tondo</span></p>
+        <p class="footer__addr" data-address></p>
+        <p class="footer__cin mono" data-cin></p>
+      </div>
+      <ul class="footer__links">
+        <li><a data-contact="phone" href="#">Telefono</a></li>
+        <li><a data-contact="whatsapp" href="#">WhatsApp</a></li>
+        <li><a data-contact="email" href="#">Email</a></li>
+        <li><a href="gestione.html" data-i18n="footHost">Area gestore (demo)</a></li>
+      </ul>
+    </div>
+    <div class="footer__bottom wrap">
+      <span data-i18n="footDemo">Sito dimostrativo: contatti, tariffe e disponibilità sono di esempio. Immagini concettuali generate con AI.</span>
+      <span class="mono" data-i18n="footMade">Prenotazioni dirette, zero commissioni</span>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/home.js"></script>
+</body>
+</html>

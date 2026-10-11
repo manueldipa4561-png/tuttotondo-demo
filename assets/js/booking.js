@@ -15,11 +15,13 @@ const MAX_MONTHS_AHEAD = 18;
 const ALT_SEARCH_DAYS = 10;
 const ALT_MAX = 3;
 const SAME_DAY_WARN_HOUR = 20;
-const LANG_KEY = "fabri171.lang";
+const LANG_KEY = "tuttotondo.lang";
+const STEP_ENTER_MS = 700;
+const TICKET_ENTER_MS = 1000;
+const EASE_OUT = "cubic-bezier(0.19, 1, 0.22, 1)";
 const ISO_RE = /^\d{4}-\d{2}-\d{2}$/;
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
-const gsap = window.gsap;
 
 // helper DOM: i dati inseriti dagli ospiti passano sempre da textContent
 function h(tag, props = {}, ...children) {
@@ -387,6 +389,9 @@ function renderRooms() {
         h("b", { textContent: fmtEuro(room.rate * n) }),
         h("small", { textContent: t("pickPrice", { n, nights: plural(n, "night", "nights"), rate: fmtEuro(room.rate) }) })));
     label.style.setProperty("--room", room.color);
+    label.style.setProperty("--crop-x", room.crop.x);
+    label.style.setProperty("--crop-y", room.crop.y);
+    label.style.setProperty("--crop-zoom", room.crop.zoom);
     return label;
   }));
   $("[data-pick-count]").textContent = t("pickCount", { s: seats(state.roomIds), k: people() });
@@ -446,7 +451,7 @@ function goTo(step) {
   $$("[data-step]").forEach((s) => (s.hidden = Number(s.dataset.step) !== step));
   renderAll();
   const current = $(`[data-step="${step}"]`);
-  if (gsap && !reducedMotion) gsap.from(current, { y: 24, opacity: 0, duration: 0.8, ease: "expo.out" });
+  if (!reducedMotion) current.animate([{ opacity: 0, transform: "translateY(24px)" }, { opacity: 1, transform: "none" }], { duration: STEP_ENTER_MS, easing: EASE_OUT });
   const top = $(".stepper").getBoundingClientRect().top + scrollY - 90;
   if (scrollY > top) scrollTo({ top, behavior: reducedMotion ? "auto" : "smooth" });
   (step === 4 ? current : $("h2", current))?.focus({ preventScroll: true });
@@ -574,7 +579,7 @@ function renderTicket() {
   const ics = $("[data-ics]");
   if (ics.href.startsWith("blob:")) URL.revokeObjectURL(ics.href);
   ics.href = URL.createObjectURL(new Blob([toICS(state.result)], { type: "text/calendar" }));
-  ics.download = `fabri171-${code}.ics`;
+  ics.download = `tuttotondo-${code}.ics`;
   $("[data-another]").href = `prenota.html?lang=${lang}`;
 }
 
@@ -583,7 +588,7 @@ function showDone() {
   state.maxStep = 4;
   renderTicket();
   goTo(4);
-  if (gsap && !reducedMotion) gsap.from("[data-ticket]", { rotate: -3, y: 60, opacity: 0, duration: 1.2, ease: "expo.out", delay: 0.1 });
+  if (!reducedMotion) $("[data-ticket]").animate([{ opacity: 0, transform: "translateY(60px) rotate(-3deg)" }, { opacity: 1, transform: "none" }], { duration: TICKET_ENTER_MS, delay: 100, easing: EASE_OUT, fill: "backwards" });
 }
 
 // ---------- avvio

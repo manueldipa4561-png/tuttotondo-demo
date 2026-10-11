@@ -3,22 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prenota diretto — Fabrì 171, Pescara</title>
-  <meta name="description" content="Prenota direttamente da Fabrì 171 a Pescara: disponibilità in tempo reale, nessuna commissione, istruzioni di arrivo su WhatsApp.">
-  <meta name="theme-color" content="#f1e9dc">
+  <title>Prenota diretto — Tuttotondo, Pescara</title>
+  <meta name="description" content="Prenota direttamente da Tuttotondo a Pescara: disponibilità in tempo reale, nessuna commissione, codice porta e istruzioni su WhatsApp.">
+  <meta name="theme-color" content="#f7efe6">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400..600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/booking.css">
   <script>document.documentElement.classList.add("js")</script>
 </head>
 <body class="page-booking">
   <a class="skip" href="#main">Salta al contenuto</a>
-  <header class="nav is-scrolled" data-nav>
-    <span class="thread nav__progress" style="--p:1"></span>
-    <a class="nav__logo" href="./">Fabrì<span class="nav__num">171</span><small>Pescara</small></a>
+  <header class="nav" data-nav>
+    <a class="nav__logo" href="./">tutto<span class="nav__num">tondo</span><small>Pescara</small></a>
     <button class="btn btn--ghost btn--sm lang" type="button" data-lang-toggle lang="en">English</button>
     <a class="btn btn--ghost btn--sm nav__back" href="./" data-i18n="back">← Torna al sito</a>
   </header>
@@ -29,7 +28,7 @@
     <header class="booking__head">
       <p class="eyebrow" data-i18n="eyebrow">Prenotazione diretta</p>
       <h1 class="display" data-i18n-html="h1">Prenota diretto, <em>senza intermediari.</em></h1>
-      <p class="booking__sub" data-i18n="sub">Nessuna commissione, conferma immediata, istruzioni di arrivo su WhatsApp. Disponibilità in tempo reale: è una demo.</p>
+      <p class="booking__sub" data-i18n="sub">Nessuna commissione, conferma immediata, codice porta e istruzioni su WhatsApp. Disponibilità in tempo reale: è una demo.</p>
       <p class="booking__help"><span data-i18n="help">Domande? Rispondiamo subito:</span> <a data-contact="phone" href="#">Telefono</a> · <a data-contact="whatsapp" href="#">WhatsApp</a></p>
     </header>
 
@@ -57,7 +56,7 @@
               </div>
             </div>
             <div class="guests__row" data-counter="children" data-min="0">
-              <div><p class="guests__label" id="lbl-children" data-i18n="children">Bambini</p><p class="guests__help" data-i18n="childrenHelp">Da 2 a 12 anni</p></div>
+              <div><p class="guests__label" id="lbl-children" data-i18n="children">Bambini</p><p class="guests__help" data-i18n="childrenHelp">Da 4 a 12 anni</p></div>
               <div class="stepper-num" role="group" aria-labelledby="lbl-children">
                 <button type="button" data-delta="-1" data-i18n-aria="less" aria-label="Meno">−</button>
                 <output aria-live="polite">0</output>
@@ -65,7 +64,7 @@
               </div>
             </div>
             <div class="guests__row" data-counter="infants" data-min="0">
-              <div><p class="guests__label" id="lbl-infants" data-i18n="infants">Neonati</p><p class="guests__help" data-i18n="infantsHelp">Da 0 a 2 anni, culla gratuita su richiesta</p></div>
+              <div><p class="guests__label" id="lbl-infants" data-i18n="infants">Neonati</p><p class="guests__help" data-i18n="infantsHelp">Da 0 a 3 anni, culla a 15 € a notte</p></div>
               <div class="stepper-num" role="group" aria-labelledby="lbl-infants">
                 <button type="button" data-delta="-1" data-i18n-aria="less" aria-label="Meno">−</button>
                 <output aria-live="polite">0</output>
@@ -124,21 +123,21 @@
             <div class="field field--full"><label for="f-arrival" data-i18n="arrival">Orario di arrivo</label>
               <select id="f-arrival" name="arrival" data-arrival>
                 <option value="" data-i18n="arrUnknown">Non lo so ancora</option>
-                <option value="14:00–16:00" data-i18n="arr1">14:00 – 16:00</option>
-                <option value="16:00–18:00" data-i18n="arr2">16:00 – 18:00</option>
-                <option value="18:00–20:00" data-i18n="arr3">18:00 – 20:00</option>
-                <option value="20:00–23:00" data-i18n="arr4">20:00 – 23:00</option>
+                <option value="15:00–17:00" data-i18n="arr1">15:00 – 17:00</option>
+                <option value="17:00–19:00" data-i18n="arr2">17:00 – 19:00</option>
+                <option value="19:00–21:00" data-i18n="arr3">19:00 – 21:00</option>
+                <option value="21:00–24:00" data-i18n="arr4">21:00 – 24:00</option>
               </select>
             </div>
             <fieldset class="field field--full pay">
-              <legend data-i18n="contactTitle">Come preferisci ricevere le istruzioni?</legend>
-              <label class="pay__opt"><input type="radio" name="contact" value="whatsapp" aria-describedby="e-contact"><span><b data-i18n="contactWa">WhatsApp (consigliato)</b><small data-i18n="contactWaHelp">Conferma, istruzioni di arrivo e promemoria. Puoi smettere di riceverli in qualsiasi momento.</small></span></label>
+              <legend data-i18n="contactTitle">Come preferisci ricevere codice porta e istruzioni?</legend>
+              <label class="pay__opt"><input type="radio" name="contact" value="whatsapp" aria-describedby="e-contact"><span><b data-i18n="contactWa">WhatsApp (consigliato)</b><small data-i18n="contactWaHelp">Conferma, codice porta, istruzioni di arrivo e promemoria. Puoi smettere di riceverli in qualsiasi momento.</small></span></label>
               <label class="pay__opt"><input type="radio" name="contact" value="email" aria-describedby="e-contact"><span><b data-i18n="contactMail">Solo email</b><small data-i18n="contactMailHelp">Nessun messaggio su WhatsApp.</small></span></label>
               <p class="field__error" id="e-contact" data-error="contact" role="alert"></p>
             </fieldset>
             <fieldset class="field field--full pay">
               <legend data-i18n="payment">Pagamento</legend>
-              <label class="pay__opt"><input type="radio" name="payment" value="struttura" checked><span><b data-i18n="payHere">In struttura</b><small data-i18n="payHereHelp">Contanti o carta al check-in</small></span></label>
+              <label class="pay__opt"><input type="radio" name="payment" value="struttura" checked><span><b data-i18n="payHere">In struttura</b><small data-i18n="payHereHelp">Contanti, da concordare con l'host</small></span></label>
               <label class="pay__opt"><input type="radio" name="payment" value="bonifico"><span><b data-i18n="payWire">Bonifico anticipato</b><small data-i18n="payWireHelp">Ti mandiamo gli estremi via email</small></span></label>
             </fieldset>
             <label class="field--full check"><input type="checkbox" name="invoiceOn" data-invoice-toggle> <span data-i18n="invoiceOn">Mi serve la fattura</span></label>
@@ -147,13 +146,13 @@
               <div class="field"><label for="f-vat" data-i18n="vat">Partita IVA o codice fiscale</label><input id="f-vat" name="vat" aria-describedby="e-vat"><p class="field__error" id="e-vat" data-error="vat"></p></div>
               <div class="field field--full"><label for="f-sdi" data-i18n="sdi">Codice SDI o PEC (facoltativo)</label><input id="f-sdi" name="sdi"></div>
             </div>
-            <div class="field field--full"><label for="f-notes" data-i18n="notes">Richieste (facoltativo)</label><textarea id="f-notes" name="notes" rows="3" data-i18n-ph="notesPh" placeholder="Es. arrivo tardi, culla, animale domestico…"></textarea></div>
+            <div class="field field--full"><label for="f-notes" data-i18n="notes">Richieste (facoltativo)</label><textarea id="f-notes" name="notes" rows="3" data-i18n-ph="notesPh" placeholder="Es. arrivo tardi, culla per un bambino…"></textarea></div>
             <div class="terms field--full">
               <p class="eyebrow" data-i18n="termsTitle">Prima di confermare</p>
               <ul>
                 <li data-i18n="termCancel">Cancellazione gratuita fino a 48 ore prima dell'arrivo (proposta demo).</li>
                 <li data-i18n="termPay">Nessun pagamento online: paghi in struttura o con bonifico.</li>
-                <li data-i18n="termRules">Non fumatori, niente feste. Animali su richiesta.</li>
+                <li data-i18n="termRules">Non fumatori, niente feste, animali non ammessi. Culla a 15 € a notte, nessun letto aggiunto.</li>
                 <li data-i18n="termTax">Tassa di soggiorno comunale da saldare in struttura.</li>
               </ul>
             </div>
@@ -195,7 +194,7 @@
             <div class="summary__total"><span data-i18n="sumTotal">Totale</span><b data-sum-total></b></div>
             <p class="summary__save"><span class="thread"></span><span data-sum-save></span></p>
           </div>
-          <p class="summary__note" data-i18n="sumNote">Check-in 14:00–23:00 · Check-out entro le 10:00 · Cancellazione gratuita fino a 48 ore prima.</p>
+          <p class="summary__note" data-i18n="sumNote">Check-in autonomo 15:00–24:00 · Check-out entro le 10:00 · Cancellazione gratuita fino a 48 ore prima.</p>
         </div>
       </aside>
     </div>
@@ -205,12 +204,11 @@
 
   <footer class="footer footer--slim">
     <div class="footer__bottom mono">
-      <span>Fabrì 171 · Via Nicola Fabrizi 171, scala C, Pescara · CIN IT068028B4IGCFTBHB</span>
+      <span>Tuttotondo · Corso Vittorio Emanuele II 129, 65121 Pescara · CIN IT068028B4HICAJULU</span>
       <span><a data-contact="phone" href="#">Telefono</a> · <a data-contact="email" href="#">Email</a></span>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
   <script type="module" src="assets/js/booking.js"></script>
 </body>
 </html>

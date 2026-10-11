@@ -1,41 +1,41 @@
 /* Host console extras: status line, channel and WhatsApp panels. The planning board and tables live in booking.css. */
-.admin__status { min-height: 1.4em; margin: 18px 0 0; font-size: 12px; color: var(--tile); }
+.admin__status { min-height: 1.4em; margin: 18px 0 0; font-size: 12px; color: var(--terra-deep); }
 .admin__status.is-error { color: #b42318; }
 .admin__lead { max-width: 70ch; margin: -6px 0 22px; color: var(--soft); }
 
 .panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 14px; align-items: start; }
 .panel-grid--wa { grid-template-columns: minmax(280px, 380px) minmax(0, 1fr); }
-.panel { padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--paper-2); }
+.panel { padding: 28px; border-radius: var(--r-lg); background: var(--paper-2); box-shadow: 0 0 0 1px var(--line); }
 .panel, .panel > div { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .panel > div { width: 100%; }
 .panel p { margin: 0; }
 .panel__head { align-self: stretch; }
 .panel__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
-.panel__title { margin: 0; font: 400 30px/1 var(--serif); }
+.panel__title { margin: 0; font: 800 28px/1 var(--serif); letter-spacing: -0.035em; }
 .panel__note { color: var(--soft); font-size: 14px; }
 .panel__error { color: #b42318; font-size: 14px; }
-.panel__big { font: 400 34px/1.1 var(--serif); }
+.panel__big { font: 800 32px/1.1 var(--serif); letter-spacing: -0.035em; }
 .panel__row { display: flex; flex-wrap: wrap; gap: 8px; }
 .feeds { align-self: stretch; }
 .feeds { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
 .feeds li { display: flex; align-items: center; gap: 4px; min-height: 40px; }
-.feeds .link-btn { margin-left: auto; color: var(--tile); }
+.feeds .link-btn { margin-left: auto; color: var(--terra-deep); }
 
 .mock-form { display: flex; flex-wrap: wrap; gap: 8px; }
-.mock-form select, .mock-form input { min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); font: 400 14px var(--sans); }
+.mock-form select, .mock-form input { min-height: 44px; padding: 0 16px; border: 0; border-radius: 22px; box-shadow: inset 0 0 0 1.5px var(--line); background: var(--paper); color: var(--ink); font: 400 14px var(--sans); }
 
 /* WhatsApp conversations */
 .wa { display: grid; gap: 14px; }
-.thread-box { padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: color-mix(in srgb, var(--tile) 6%, var(--paper-2)); }
-.thread-box__title { margin: 0 0 12px; font-size: 11px; font-weight: 500; }
-.bubble { position: relative; max-width: min(100%, 560px); margin: 0 0 10px; padding: 12px 14px 26px; border-radius: 4px 16px 16px 16px; background: var(--paper-2); box-shadow: 0 1px 0 var(--line); }
-.bubble--guest { margin-left: auto; border-radius: 16px 4px 16px 16px; background: color-mix(in srgb, var(--honey) 28%, var(--paper-2)); }
-.bubble--host { border: 1px dashed var(--line); background: transparent; }
+.thread-box { padding: 20px; border-radius: var(--r-lg); background: color-mix(in srgb, var(--sage) 16%, var(--paper-2)); box-shadow: 0 0 0 1px var(--line); }
+.thread-box__title { margin: 0 0 12px; font-size: 11px; font-weight: 700; }
+.bubble { position: relative; max-width: min(100%, 560px); margin: 0 0 10px; padding: 12px 16px 26px; border-radius: 6px 20px 20px 20px; background: var(--paper-2); box-shadow: 0 1px 0 var(--line); }
+.bubble--guest { margin-left: auto; border-radius: 20px 6px 20px 20px; background: color-mix(in srgb, var(--sage) 34%, var(--paper-2)); }
+.bubble--host { border: 1.5px dashed var(--line); background: transparent; box-shadow: none; }
 .bubble__meta { margin: 0 0 6px; font-size: 10px; color: var(--soft); }
 .bubble__text { margin: 0; font-size: 14px; line-height: 1.45; }
-.bubble__status { position: absolute; right: 12px; bottom: 6px; font: 500 10px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
-.bubble__status--sent { color: var(--tile); }
-.bubble__status--scheduled { color: var(--taupe); }
+.bubble__status { position: absolute; right: 14px; bottom: 6px; font: 700 10px var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.bubble__status--sent { color: var(--sage-deep); }
+.bubble__status--scheduled { color: var(--soft); }
 .bubble__status--failed { color: #b42318; }
 .bubble.is-cancelled { opacity: 0.5; text-decoration: line-through; }
 
