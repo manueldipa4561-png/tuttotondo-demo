@@ -1,7 +1,9 @@
 /* Booking page (prenota.html) and the planning board and tables of the host console (gestione.html) */
-.page-booking { --range: color-mix(in srgb, var(--terra) 16%, transparent); }
-/* a big blush circle behind the page: the one decoration, same shape as everything else */
-.page-booking::before { content: ""; position: absolute; z-index: -1; top: -16vmax; right: -14vmax; width: min(60vmax, 900px); aspect-ratio: 1; border-radius: 50%; background: var(--blush-2); }
+/* a big blush circle behind the page: the one decoration, same shape as everything else (a gradient, so it can never widen the page) */
+.page-booking {
+  --range: color-mix(in srgb, var(--terra) 16%, transparent);
+  background: radial-gradient(circle min(34vmax, 520px) at calc(100% + 3vmax) -4vmax, var(--blush-2) 99.5%, transparent 100%) no-repeat;
+}
 .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
 .booking, .admin { max-width: 1440px; margin: 0 auto; padding: calc(var(--nav-h) + 6vh) var(--gutter) 10vh; }
 .booking__head .display, .admin__head .display { margin: 14px 0 12px; font-size: clamp(48px, 6.4vw, 100px); }
@@ -213,7 +215,7 @@
 .mobile-total { display: none; }
 
 @media (max-width: 1000px) {
-  .booking__grid { grid-template-columns: 1fr; }
+  .booking__grid { grid-template-columns: minmax(0, 1fr); }
   .summary { position: static; scroll-margin-top: calc(var(--nav-h) + 16px); }
   .summary__media { aspect-ratio: 21 / 9; }
   .kpis { grid-template-columns: 1fr 1fr; }
@@ -236,7 +238,7 @@
   .stepper button { padding: 0 16px; white-space: nowrap; }
   .stepper button:not([aria-current="step"]) [data-i18n] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .cal { padding: 16px; }
-  .guests { padding: 4px 18px; }
+  .guests { padding: 16px 18px 4px; }
   .pick { grid-template-columns: 84px minmax(0, 1fr); padding: 12px 18px 12px 12px; border-radius: 999px 32px 32px 999px; }
   .pick__name { font-size: 26px; }
   .pick__price { grid-column: 1 / -1; text-align: left; display: flex; align-items: baseline; gap: 10px; padding-left: 6px; }
