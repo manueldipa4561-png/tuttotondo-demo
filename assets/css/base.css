@@ -1,0 +1,115 @@
+/* Fabrì 171: design tokens, type, buttons, nav, footer. Home in home.css, booking in booking.css, host console in admin.css. */
+:root {
+  --paper: #f1e9dc; /* linen */
+  --paper-2: #f8f3ea;
+  --ink: #1c1814;
+  --line: color-mix(in srgb, currentColor 16%, transparent);
+  --soft: color-mix(in srgb, currentColor 68%, transparent);
+  --sand: #e4d5bb;
+  --plaster: #d8c9b2;
+  --taupe: #8a7a68;
+  --honey: #c58f4e; /* rattan, honey wood */
+  --tile: #2d4a66; /* Adriatic blue of the cement tiles */
+  --terra: #b5573a;
+  --thread: linear-gradient(90deg, var(--tile), var(--honey), var(--terra), var(--tile));
+  --serif: "Fraunces", "Times New Roman", serif;
+  --sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --mono: "DM Mono", ui-monospace, "SF Mono", monospace;
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+  --gutter: clamp(16px, 2.6vw, 40px);
+  --nav-h: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--paper); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; overflow-x: clip; background: var(--paper); color: var(--ink);
+  font: 400 clamp(15px, 1.05vw, 17px) / 1.55 var(--sans); -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+figure { margin: 0; }
+a { color: inherit; }
+::selection { background: var(--honey); color: var(--ink); }
+:focus-visible { outline: 2px solid var(--tile); outline-offset: 3px; border-radius: 4px; }
+.on-dark :focus-visible, .nav--over :focus-visible { outline-color: var(--paper); }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: fixed; top: 8px; left: 8px; z-index: 200; padding: 10px 16px; border-radius: 99px; background: var(--ink); color: var(--paper); transform: translateY(-200%); }
+.skip:focus { transform: none; }
+
+.eyebrow { margin: 0; font: 500 12px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.mono { font-family: var(--mono); font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
+.display { margin: 0; font: 400 clamp(44px, 7.4vw, 120px) / 0.94 var(--serif); letter-spacing: -0.02em; }
+.display em { font-style: italic; }
+
+/* the thread: a thin line in the tile blue, rattan and terracotta of the rooms, used for progress and accents */
+.thread { display: block; height: 2px; background: var(--thread); background-size: 200% 100%; animation: thread 8s linear infinite; }
+@keyframes thread { to { background-position: -200% 0; } }
+@keyframes thread-border { to { background-position: 0 0, -200% 0; } }
+
+/* ---------- buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6em; min-height: 46px; padding: 0.95em 1.45em;
+  border: 0; border-radius: 99px; background: var(--ink); color: var(--paper);
+  font: 500 15px/1 var(--sans); text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: transform 0.5s var(--ease), background-color 0.3s, color 0.3s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn span { transition: transform 0.5s var(--ease); }
+.btn:hover span { transform: translateX(4px); }
+.btn--light { background: var(--paper); color: var(--ink); }
+.btn--ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; }
+.btn--sm { min-height: 40px; padding: 0.75em 1.2em; font-size: 14px; }
+.btn--xl { padding: 1.2em 2.1em; font-size: 18px; }
+.btn--thread {
+  border: 2px solid transparent; background: linear-gradient(var(--ink), var(--ink)) padding-box, var(--thread) border-box;
+  background-size: auto, 200% 100%; animation: thread-border 8s linear infinite;
+}
+
+/* ---------- nav */
+.nav {
+  position: fixed; inset: 0 0 auto; z-index: 50; height: var(--nav-h); display: flex; align-items: center; gap: 24px; padding: 0 var(--gutter);
+  transition: transform 0.6s var(--ease), background-color 0.4s, color 0.4s;
+}
+.nav.is-scrolled { background: color-mix(in srgb, var(--paper) 82%, transparent); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); }
+.nav.is-hidden:not(:focus-within) { transform: translateY(-100%); }
+.nav--over:not(.is-scrolled) { color: var(--paper); }
+.nav__progress { position: absolute; inset: auto 0 0; transform: scaleX(var(--p, 0)); transform-origin: left; }
+.nav__logo { display: flex; align-items: baseline; gap: 8px; margin-right: auto; font: 500 28px/1 var(--serif); letter-spacing: -0.01em; text-decoration: none; }
+.nav__num { font-style: italic; font-weight: 400; color: var(--terra); }
+.nav--over:not(.is-scrolled) .nav__num { color: var(--honey); }
+.nav__logo small { margin-left: 4px; font: 500 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.nav__links { display: flex; gap: 26px; font-size: 14px; }
+.nav__links a { position: relative; padding: 6px 0; text-decoration: none; }
+.nav__links a::after { content: ""; position: absolute; inset: auto 0 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.5s var(--ease); }
+.nav__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.nav__burger { display: none; min-height: 44px; padding: 0 18px; border: 1px solid currentColor; border-radius: 99px; background: transparent; color: inherit; font: 500 14px/1 var(--sans); cursor: pointer; }
+.lang { margin-right: 0; }
+
+.menu { position: fixed; inset: 0; z-index: 45; display: flex; align-items: flex-end; padding: calc(var(--nav-h) + 24px) var(--gutter) 48px; background: var(--ink); color: var(--paper); }
+.menu[hidden] { display: none; }
+.menu nav { display: flex; flex-direction: column; gap: 6px; }
+.menu a { font: 400 clamp(40px, 11vw, 76px) / 1.05 var(--serif); text-decoration: none; }
+.menu .menu__book { margin-top: 24px; font: 500 18px/1 var(--sans); }
+body.menu-open .nav { color: var(--paper); background: transparent; backdrop-filter: none; }
+.mobile-book { display: none; }
+
+.api-error { margin: 0 0 24px; padding: 14px 18px; border-radius: 14px; background: color-mix(in srgb, #b42318 12%, var(--paper-2)); color: #7a1a12; font-size: 15px; }
+.api-error[hidden] { display: none; }
+
+/* ---------- footer */
+.footer { padding: 8vh var(--gutter) 28px; background: var(--ink); color: var(--paper); }
+.footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 24px; border-top: 1px solid color-mix(in srgb, var(--paper) 22%, transparent); font-size: 12px; }
+.footer--slim { padding: 24px var(--gutter); }
+.footer--slim .footer__bottom { padding-top: 0; border-top: 0; }
+
+@media (max-width: 900px) {
+  .nav__links { display: none; }
+  .nav__burger { display: inline-flex; align-items: center; }
+  .nav .btn--sm { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thread, .btn--thread { animation: none; }
+  .btn, .btn span, .nav__links a::after { transition: none; }
+}

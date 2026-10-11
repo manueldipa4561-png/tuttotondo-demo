@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Area gestore — Fabrì 171</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f1e9dc">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/booking.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body class="page-booking">
+  <a class="skip" href="#main">Salta al contenuto</a>
+  <header class="nav is-scrolled" data-nav>
+    <span class="thread nav__progress" style="--p:1"></span>
+    <a class="nav__logo" href="./">Fabrì<span class="nav__num">171</span><small>Area gestore</small></a>
+    <a class="btn btn--ghost btn--sm" href="./">← Sito</a>
+  </header>
+
+  <main id="main" class="admin">
+    <header class="admin__head">
+      <div>
+        <p class="eyebrow">Area gestore · demo in locale</p>
+        <h1 class="display">Il pannello <em>di casa.</em></h1>
+        <p class="booking__sub">Ogni prenotazione del sito arriva qui subito, blocca le date sui portali da sola e fa partire i messaggi WhatsApp. Niente extranet, niente commissioni.</p>
+      </div>
+      <div class="admin__actions">
+        <a class="btn btn--thread" href="prenota.html">Nuova prenotazione <span aria-hidden="true">→</span></a>
+        <button class="btn btn--ghost" type="button" data-reset>Ripristina demo</button>
+      </div>
+    </header>
+
+    <p class="admin__status mono" data-status role="status" aria-live="polite"></p>
+    <section class="kpis" data-kpis aria-label="Indicatori"></section>
+
+    <h2>Calendari dei portali</h2>
+    <p class="admin__lead">Il sito e i portali si scambiano i calendari in formato iCal. Quando qualcuno prenota qui, le date risultano bloccate sul portale alla sua prossima lettura; quando arriva una prenotazione dal portale, la importiamo e blocchiamo le date sul sito.</p>
+    <div class="panel-grid">
+      <article class="panel" data-channels aria-label="Stato dei canali"></article>
+      <article class="panel" data-mock aria-label="Simulatore Booking.com"></article>
+    </div>
+
+    <h2>WhatsApp automatico</h2>
+    <div class="panel-grid panel-grid--wa">
+      <article class="panel" data-clock aria-label="Orologio demo"></article>
+      <div class="wa" data-outbox aria-label="Messaggi"></div>
+    </div>
+
+    <h2>Planning · prossimi 21 giorni</h2>
+    <div class="plan" data-plan role="region" aria-label="Planning camere" tabindex="0"></div>
+    <ul class="plan__legend mono">
+      <li><i class="lg-ota"></i>Portale (Booking.com)</li>
+      <li><i></i>Telefono</li>
+      <li><i class="lg-web"></i>Sito web, zero commissioni</li>
+    </ul>
+
+    <h2>Prenotazioni</h2>
+    <div class="table-wrap" data-table role="region" aria-label="Elenco prenotazioni" tabindex="0"></div>
+  </main>
+
+  <footer class="footer footer--slim">
+    <div class="footer__bottom mono">
+      <span>Fabrì 171 · Via Nicola Fabrizi 171, scala C, Pescara</span>
+      <span>Demo · dati di esempio generati automaticamente · solo localhost</span>
+    </div>
+  </footer>
+
+  <script type="module" src="assets/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prenota diretto — Fabrì 171, Pescara</title>
+  <meta name="description" content="Prenota direttamente da Fabrì 171 a Pescara: disponibilità in tempo reale, nessuna commissione, istruzioni di arrivo su WhatsApp.">
+  <meta name="theme-color" content="#f1e9dc">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/booking.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body class="page-booking">
+  <a class="skip" href="#main">Salta al contenuto</a>
+  <header class="nav is-scrolled" data-nav>
+    <span class="thread nav__progress" style="--p:1"></span>
+    <a class="nav__logo" href="./">Fabrì<span class="nav__num">171</span><small>Pescara</small></a>
+    <button class="btn btn--ghost btn--sm lang" type="button" data-lang-toggle lang="en">English</button>
+    <a class="btn btn--ghost btn--sm nav__back" href="./" data-i18n="back">← Torna al sito</a>
+  </header>
+
+  <main id="main" class="booking">
+    <noscript><p class="api-error">Questa pagina richiede JavaScript. This page needs JavaScript.</p></noscript>
+    <p class="api-error" data-api-error role="alert" data-i18n="apiError" hidden>Il server non risponde. Avvia il sito con `npm start` e ricarica la pagina.</p>
+    <header class="booking__head">
+      <p class="eyebrow" data-i18n="eyebrow">Prenotazione diretta</p>
+      <h1 class="display" data-i18n-html="h1">Prenota diretto, <em>senza intermediari.</em></h1>
+      <p class="booking__sub" data-i18n="sub">Nessuna commissione, conferma immediata, istruzioni di arrivo su WhatsApp. Disponibilità in tempo reale: è una demo.</p>
+      <p class="booking__help"><span data-i18n="help">Domande? Rispondiamo subito:</span> <a data-contact="phone" href="#">Telefono</a> · <a data-contact="whatsapp" href="#">WhatsApp</a></p>
+    </header>
+
+    <ol class="stepper" aria-label="Passaggi">
+      <li><button type="button" data-goto="1" aria-current="step"><span class="mono">01</span> <span data-i18n="step1">Date</span></button></li>
+      <li><button type="button" data-goto="2" disabled><span class="mono">02</span> <span data-i18n="step2">Camere</span></button></li>
+      <li><button type="button" data-goto="3" disabled><span class="mono">03</span> <span data-i18n="step3">Dati</span></button></li>
+      <li><button type="button" data-goto="4" disabled><span class="mono">04</span> <span data-i18n="step4">Conferma</span></button></li>
+    </ol>
+
+    <div class="booking__grid">
+      <div class="booking__steps">
+        <!-- STEP 1: guests + dates -->
+        <section class="step" data-step="1" aria-labelledby="s1-title">
+          <h2 id="s1-title" class="step__title" tabindex="-1" data-i18n="s1title">Quando arrivi?</h2>
+
+          <div class="guests" role="group" aria-labelledby="guests-title">
+            <p class="guests__title" id="guests-title" data-i18n="guestsTitle">Chi viene?</p>
+            <div class="guests__row" data-counter="adults" data-min="1">
+              <div><p class="guests__label" id="lbl-adults" data-i18n="adults">Adulti</p><p class="guests__help" data-i18n="adultsHelp">Dai 13 anni</p></div>
+              <div class="stepper-num" role="group" aria-labelledby="lbl-adults">
+                <button type="button" data-delta="-1" data-i18n-aria="less" aria-label="Meno">−</button>
+                <output aria-live="polite">2</output>
+                <button type="button" data-delta="1" data-i18n-aria="more" aria-label="Più">+</button>
+              </div>
+            </div>
+            <div class="guests__row" data-counter="children" data-min="0">
+              <div><p class="guests__label" id="lbl-children" data-i18n="children">Bambini</p><p class="guests__help" data-i18n="childrenHelp">Da 2 a 12 anni</p></div>
+              <div class="stepper-num" role="group" aria-labelledby="lbl-children">
+                <button type="button" data-delta="-1" data-i18n-aria="less" aria-label="Meno">−</button>
+                <output aria-live="polite">0</output>
+                <button type="button" data-delta="1" data-i18n-aria="more" aria-label="Più">+</button>
+              </div>
+            </div>
+            <div class="guests__row" data-counter="infants" data-min="0">
+              <div><p class="guests__label" id="lbl-infants" data-i18n="infants">Neonati</p><p class="guests__help" data-i18n="infantsHelp">Da 0 a 2 anni, culla gratuita su richiesta</p></div>
+              <div class="stepper-num" role="group" aria-labelledby="lbl-infants">
+                <button type="button" data-delta="-1" data-i18n-aria="less" aria-label="Meno">−</button>
+                <output aria-live="polite">0</output>
+                <button type="button" data-delta="1" data-i18n-aria="more" aria-label="Più">+</button>
+              </div>
+            </div>
+            <p class="guests__rooms" data-rooms-needed aria-live="polite"></p>
+          </div>
+
+          <div class="cal" data-cal>
+            <div class="cal__nav">
+              <button type="button" class="cal__arrow" data-cal-prev data-i18n-aria="prevMonth" aria-label="Mese precedente">←</button>
+              <p class="cal__hint mono" data-cal-hint aria-live="polite">Scegli la data di arrivo</p>
+              <button type="button" class="cal__arrow" data-cal-next data-i18n-aria="nextMonth" aria-label="Mese successivo">→</button>
+            </div>
+            <div class="cal__notice" data-cal-notice role="status" hidden></div>
+            <p class="cal__filter" data-cal-filter hidden></p>
+            <div class="cal__months" data-cal-months></div>
+            <div class="cal__foot">
+              <ul class="cal__legend mono">
+                <li><i class="lg lg--free"></i><span data-i18n="legendFree">Disponibile</span></li>
+                <li><i class="lg lg--sel"></i><span data-i18n="legendSel">Il tuo soggiorno</span></li>
+                <li><i class="lg lg--full"></i><span data-i18n="legendFull">Esaurito</span></li>
+                <li><i class="lg lg--blocked"></i><span data-i18n="legendBlocked">Non disponibile come partenza</span></li>
+              </ul>
+              <button type="button" class="link-btn link-btn--ink" data-cal-reset hidden data-i18n="reset">Cambia date</button>
+            </div>
+          </div>
+          <p class="cal__late" data-same-day hidden></p>
+
+          <div class="step__actions">
+            <button class="btn btn--xl" type="button" data-next="2" disabled><span data-i18n="next1">Vedi le camere libere</span> <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <!-- STEP 2: rooms (one or more) -->
+        <section class="step" data-step="2" aria-labelledby="s2-title" hidden>
+          <h2 id="s2-title" class="step__title" tabindex="-1" data-i18n="s2title">Scegli le camere</h2>
+          <p class="step__lead" data-rooms-lead></p>
+          <div class="rooms-pick" data-rooms-pick role="group" aria-labelledby="s2-title"></div>
+          <p class="pick-count mono" data-pick-count aria-live="polite"></p>
+          <div class="step__actions">
+            <button class="btn btn--ghost" type="button" data-goto="1" data-i18n="backDates">← Date</button>
+            <button class="btn btn--xl" type="button" data-next="3" disabled><span data-i18n="next2">Continua</span> <span aria-hidden="true">→</span></button>
+          </div>
+        </section>
+
+        <!-- STEP 3: details -->
+        <section class="step" data-step="3" aria-labelledby="s3-title" hidden>
+          <h2 id="s3-title" class="step__title" tabindex="-1" data-i18n="s3title">I tuoi dati</h2>
+          <form class="form" data-form novalidate>
+            <div class="field"><label for="f-first" data-i18n="firstName">Nome</label><input id="f-first" name="firstName" autocomplete="given-name" required aria-describedby="e-firstName"><p class="field__error" id="e-firstName" data-error="firstName"></p></div>
+            <div class="field"><label for="f-last" data-i18n="lastName">Cognome</label><input id="f-last" name="lastName" autocomplete="family-name" required aria-describedby="e-lastName"><p class="field__error" id="e-lastName" data-error="lastName"></p></div>
+            <div class="field"><label for="f-email" data-i18n="email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email"><p class="field__error" id="e-email" data-error="email"></p></div>
+            <div class="field"><label for="f-phone" data-i18n="phone">Telefono (con prefisso)</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+39 …" required aria-describedby="e-phone"><p class="field__error" id="e-phone" data-error="phone"></p></div>
+            <div class="field field--full"><label for="f-arrival" data-i18n="arrival">Orario di arrivo</label>
+              <select id="f-arrival" name="arrival" data-arrival>
+                <option value="" data-i18n="arrUnknown">Non lo so ancora</option>
+                <option value="14:00–16:00" data-i18n="arr1">14:00 – 16:00</option>
+                <option value="16:00–18:00" data-i18n="arr2">16:00 – 18:00</option>
+                <option value="18:00–20:00" data-i18n="arr3">18:00 – 20:00</option>
+                <option value="20:00–23:00" data-i18n="arr4">20:00 – 23:00</option>
+              </select>
+            </div>
+            <fieldset class="field field--full pay">
+              <legend data-i18n="contactTitle">Come preferisci ricevere le istruzioni?</legend>
+              <label class="pay__opt"><input type="radio" name="contact" value="whatsapp" aria-describedby="e-contact"><span><b data-i18n="contactWa">WhatsApp (consigliato)</b><small data-i18n="contactWaHelp">Conferma, istruzioni di arrivo e promemoria. Puoi smettere di riceverli in qualsiasi momento.</small></span></label>
+              <label class="pay__opt"><input type="radio" name="contact" value="email" aria-describedby="e-contact"><span><b data-i18n="contactMail">Solo email</b><small data-i18n="contactMailHelp">Nessun messaggio su WhatsApp.</small></span></label>
+              <p class="field__error" id="e-contact" data-error="contact" role="alert"></p>
+            </fieldset>
+            <fieldset class="field field--full pay">
+              <legend data-i18n="payment">Pagamento</legend>
+              <label class="pay__opt"><input type="radio" name="payment" value="struttura" checked><span><b data-i18n="payHere">In struttura</b><small data-i18n="payHereHelp">Contanti o carta al check-in</small></span></label>
+              <label class="pay__opt"><input type="radio" name="payment" value="bonifico"><span><b data-i18n="payWire">Bonifico anticipato</b><small data-i18n="payWireHelp">Ti mandiamo gli estremi via email</small></span></label>
+            </fieldset>
+            <label class="field--full check"><input type="checkbox" name="invoiceOn" data-invoice-toggle> <span data-i18n="invoiceOn">Mi serve la fattura</span></label>
+            <div class="form__invoice field--full" data-invoice hidden>
+              <div class="field"><label for="f-company" data-i18n="company">Ragione sociale (facoltativo)</label><input id="f-company" name="company" autocomplete="organization"></div>
+              <div class="field"><label for="f-vat" data-i18n="vat">Partita IVA o codice fiscale</label><input id="f-vat" name="vat" aria-describedby="e-vat"><p class="field__error" id="e-vat" data-error="vat"></p></div>
+              <div class="field field--full"><label for="f-sdi" data-i18n="sdi">Codice SDI o PEC (facoltativo)</label><input id="f-sdi" name="sdi"></div>
+            </div>
+            <div class="field field--full"><label for="f-notes" data-i18n="notes">Richieste (facoltativo)</label><textarea id="f-notes" name="notes" rows="3" data-i18n-ph="notesPh" placeholder="Es. arrivo tardi, culla, animale domestico…"></textarea></div>
+            <div class="terms field--full">
+              <p class="eyebrow" data-i18n="termsTitle">Prima di confermare</p>
+              <ul>
+                <li data-i18n="termCancel">Cancellazione gratuita fino a 48 ore prima dell'arrivo (proposta demo).</li>
+                <li data-i18n="termPay">Nessun pagamento online: paghi in struttura o con bonifico.</li>
+                <li data-i18n="termRules">Non fumatori, niente feste. Animali su richiesta.</li>
+                <li data-i18n="termTax">Tassa di soggiorno comunale da saldare in struttura.</li>
+              </ul>
+            </div>
+            <p class="field__error field--full" id="e-form" data-error="form" role="alert"></p>
+            <div class="step__actions field--full">
+              <button class="btn btn--ghost" type="button" data-goto="2" data-i18n="backRooms">← Camere</button>
+              <button class="btn btn--xl btn--thread" type="submit"><span data-i18n="submit">Conferma prenotazione</span> <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+        </section>
+
+        <!-- STEP 4: confirmation -->
+        <section class="step step--done" data-step="4" aria-labelledby="s4-title" hidden tabindex="-1">
+          <p class="eyebrow" data-i18n="doneEyebrow">Prenotazione confermata</p>
+          <h2 id="s4-title" class="display" data-done-title>Grazie.</h2>
+          <div class="ticket" data-ticket></div>
+          <div class="step__actions">
+            <a class="btn" data-ics download href="#" data-i18n="ics">Aggiungi al calendario</a>
+            <a class="btn btn--ghost" data-another href="prenota.html" data-i18n="another">Prenota altre date</a>
+            <a class="btn btn--ghost" href="./" data-i18n="home">Torna al sito</a>
+          </div>
+          <p class="demo-link"><a href="gestione.html" data-i18n="demoOwner">Demo: guarda come la vede il gestore →</a></p>
+        </section>
+      </div>
+
+      <aside class="summary" id="riepilogo" aria-label="Riepilogo" data-summary>
+        <div class="summary__media" data-sum-media><span class="mono" data-i18n="sumNoRoom">Nessuna camera scelta</span></div>
+        <div class="summary__body">
+          <p class="eyebrow" data-sum-type data-i18n="sumTitle">Il tuo soggiorno</p>
+          <p class="summary__room" data-sum-room>Scegli date e camere</p>
+          <dl class="summary__rows">
+            <div><dt data-i18n="sumIn">Arrivo</dt><dd data-sum-in>—</dd></div>
+            <div><dt data-i18n="sumOut">Partenza</dt><dd data-sum-out>—</dd></div>
+            <div><dt data-i18n="sumGuests">Ospiti</dt><dd data-sum-guests>2 adulti</dd></div>
+          </dl>
+          <div class="summary__price" data-sum-price hidden>
+            <div data-sum-lines></div>
+            <div class="summary__line summary__line--portal"><span data-i18n="sumPortal">Sui portali (stima)</span><s data-sum-portal></s></div>
+            <div class="summary__total"><span data-i18n="sumTotal">Totale</span><b data-sum-total></b></div>
+            <p class="summary__save"><span class="thread"></span><span data-sum-save></span></p>
+          </div>
+          <p class="summary__note" data-i18n="sumNote">Check-in 14:00–23:00 · Check-out entro le 10:00 · Cancellazione gratuita fino a 48 ore prima.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <a class="mobile-total" href="#riepilogo" data-mobile-total hidden><span data-mt-label></span><b data-mt-total></b></a>
+
+  <footer class="footer footer--slim">
+    <div class="footer__bottom mono">
+      <span>Fabrì 171 · Via Nicola Fabrizi 171, scala C, Pescara · CIN IT068028B4IGCFTBHB</span>
+      <span><a data-contact="phone" href="#">Telefono</a> · <a data-contact="email" href="#">Email</a></span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script type="module" src="assets/js/booking.js"></script>
+</body>
+</html>

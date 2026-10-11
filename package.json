@@ -1,0 +1,12 @@
+{
+  "name": "fabri171-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fabrì 171 (Pescara): direct-booking demo site with local booking API, iCal channel sync and WhatsApp automation",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=22" }
+}
