@@ -98,6 +98,6 @@ export const STRINGS = {
     q8: "Can I cancel?", a8: "Free of charge up to 48 hours before arrival (demo proposal, to be confirmed).",
     q9: "Why book direct?", a9: "No commission for the property, so a lower price (demo proposal: about 10% less than the portals), instant confirmation and your door code straight on WhatsApp.",
     finalTitle: "Ready for a <em>round room?</em>", finalP: "No commissions, instant confirmation, reception in your phone.", finalBtn: "Book direct",
-    footHost: "Host console (demo)", footDemo: "Demo site: contacts, rates and availability are samples. Photos from the public listings (Booking.com), used for the demo: the owner's permission or official photos to be confirmed.", footMade: "Direct bookings, zero commissions",
+    ownerTab: "Owner panel · demo", footHost: "Host console (demo)", footDemo: "Demo site: contacts, rates and availability are samples. Photos from the public listings (Booking.com), used for the demo: the owner's permission or official photos to be confirmed.", footMade: "Direct bookings, zero commissions",
   },
 };

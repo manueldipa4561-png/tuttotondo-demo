@@ -74,13 +74,16 @@ async function initQuickBar() {
   });
 }
 
-// the round "Prenota" button appears once the hero is behind you and goes away at the final call to action
+// the round "Prenota" button (and, on narrow screens, the owner-panel pill) appears once the hero is behind you and goes away
+// at the final call to action: in the hero the pill would sit on top of the booking bar
 function initMobileBook() {
   const bar = $("[data-mobile-book]");
+  const ownerTab = $(".owner-tab");
   const covering = new Set();
   const watch = new IntersectionObserver((entries) => {
     entries.forEach((entry) => (entry.isIntersecting ? covering.add(entry.target) : covering.delete(entry.target)));
     bar.classList.toggle("is-visible", covering.size === 0);
+    ownerTab?.classList.toggle("is-visible", covering.size === 0);
   });
   watch.observe($(".hero"));
   watch.observe($("[data-final]"));
